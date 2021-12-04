@@ -14,8 +14,8 @@ if (cluster.isMaster) {
 } 
 else {
     express()
-        .get('/', function (req, res) {
-            res.send('Hello to the World from Worker ' + cluster.worker.id);
+        .get('/api/info', function (req, res) {
+            res.json({data: 'Hello to the World from Worker ' + cluster.worker.id });
         })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 }
