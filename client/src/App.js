@@ -23,6 +23,18 @@ class App extends Component {
       );
   }
 
+  login() {
+    fetch('/api/loginurl')
+      .then(res => {
+        return res.json();
+      })
+      .then(
+        result => {
+          window.location.href = result.url;
+        }
+      );
+  }
+
   render() {
     return (
       <div className="App">
@@ -31,14 +43,12 @@ class App extends Component {
           <p>
             {this.state.data}
           </p>
-          <a
+          <button
             className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={this.login}
           >
-            Learn React
-          </a>
+            Log in with Salesforce
+          </button>
         </header>
       </div>
     );
