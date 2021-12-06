@@ -11,7 +11,6 @@ class App extends Component {
   }
 
   callApi = () => {
-    // Get the passwords and store them in state
     fetch('/api/info')
       .then(res => {
         return res.json();

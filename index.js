@@ -3,10 +3,12 @@ const path = require('path');
 const cluster = require('cluster');
 const jsforce = require('jsforce');
 const PORT = process.env.PORT || 5000;
+const REDIRECT_URL = process.env.REDIRECT_URL || 'http://localhost:5000/logincallback';
+const CLIENT_ID = process.env.CLIENT_ID || '3MVG9p1Q1BCe9GmBiGQu580Yt65a8Xb9wsWBZfDU2nGssyGAzq6EH1152hUc1UeAIXVdWwSg6nMhmq6X_UAQq';
 const oauth2 = new jsforce.OAuth2({
     loginUrl : 'https://login.salesforce.com',
-    clientId : '3MVG9p1Q1BCe9GmBiGQu580Yt65a8Xb9wsWBZfDU2nGssyGAzq6EH1152hUc1UeAIXVdWwSg6nMhmq6X_UAQq',
-    redirectUri : 'http://localhost:5000/logincallback'
+    clientId : CLIENT_ID,
+    redirectUri : LOGIN_CALLBACK
 });
 
 if (cluster.isMaster) {
@@ -28,6 +30,7 @@ else {
         res.json({url: oauth2.getAuthorizationUrl({ scope : 'api' })});
     })
     .get('/logincallback', function (req, res) {
+        //set access token and stuff in memory and return
         res.json({text: 'Logged in successfully!'});
     })
     .get('*', (req, res) => {
