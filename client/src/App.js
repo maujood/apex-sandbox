@@ -3,21 +3,28 @@ import './App.css';
 import React, { Component } from 'react';
 
 class App extends Component {
-  state = { data: '' };
+  state = { 
+    loggedIn: false,
+    username: 'unknown',
+    userId: ''
+  };
 
   // Fetch passwords after first mount
   componentDidMount() {
-    this.callApi();
+    this.setInfo();
   }
 
-  callApi = () => {
+  setInfo = () => {
     fetch('/api/info')
       .then(res => {
         return res.json();
       })
       .then(
         result => {
-          this.setState({ data: result.data });
+          this.setState({ 
+            loggedIn: result.data.loggedIn,
+            userId: result.data.userId 
+          });
         }
       );
   }
@@ -34,23 +41,39 @@ class App extends Component {
       );
   }
 
+  logout = () => {
+    fetch('api/logout')
+    .then(() => {
+      this.setInfo();
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {this.state.data}
-          </p>
-          <button
-            className="App-link"
-            onClick={this.login}
-          >
-            Log in with Salesforce
-          </button>
+            {this.loginSection()}
         </header>
       </div>
     );
+  }
+
+  loginSection() {
+    if (this.state.loggedIn) {
+      return (
+        <div>
+          <p>You are logged in as: {this.state.userId}.</p>
+          <button onClick={this.logout}>Log out</button>
+        </div>);
+    }
+    else {
+      return (
+        <button className="App-link" onClick={this.login}>
+          Log in with Salesforce
+        </button>
+      );
+    }
   }
 }
 
