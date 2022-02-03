@@ -4,6 +4,7 @@ const cluster = require('cluster');
 const jsforce = require('jsforce');
 const session = require('express-session');
 const auth = require('./server/auth');
+const { json } = require('express');
 //const { default: auth } = require('./server/auth');
 
 const PORT = process.env.PORT;
@@ -46,7 +47,17 @@ else {
     });
     
     app.get('/api/loginurl', function (req, res) {
-        res.json({url: auth.getLoginUrl()});
+        res.json({url: auth.getLoginUrl()}); 
+    });
+
+    app.get('/api/executeApex', function (req, res) {
+        let apexBody = "System.debug('Hello, World');";
+        let conn = auth.getConnection(req);
+        conn.tooling.executeAnonymous(apexBody, function(err, executeResponse) {
+            if (err) { return console.error(err); }
+            console.log(JSON.stringify(executeResponse));
+            res.json({status : executeResponse.success ? "Success" : "Failure"});
+        });
     });
 
     app.get('/logincallback', function (req, res) {

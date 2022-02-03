@@ -14,19 +14,27 @@ let auth = {
     isLoggedIn() {
         
     },
-    getConnection() {
-
+    getConnection(req) {
+        let authInfo = req.session.authInfo;
+        let conn = new jsforce.Connection({
+            instanceUrl : authInfo.instanceUrl,
+            accessToken : authInfo.accessToken
+            //refreshToken : authInfo.refreshToken
+        });
+        return conn;
     },
     getUserInfo(req) {
         let authInfo = req.session.authInfo;
+        let userInfo = req.session.userInfo;
         let info = {
             loggedIn: false,
             username: null
         };
 
-        if (authInfo != null) {
+        if (authInfo != null && userInfo != null) {
             info.loggedIn = true;
-            info.userId = authInfo.userId;
+            info.username = authInfo.username;
+            info.userDisplayName = userInfo.userDisplayName;
             info.instanceUrl = authInfo.instanceUrl;
         }
 
@@ -47,7 +55,6 @@ let auth = {
             console.log("Instance URL: " + conn.instanceUrl);
             console.log("User ID: " + userInfo.id);
             console.log("Organization ID: " + userInfo.organizationId);
-            
             req.session.authInfo = { 
                 accessToken: conn.accessToken,
                 refreshToken: conn.refreshToken,
@@ -55,12 +62,20 @@ let auth = {
                 userId: userInfo.id,
                 organizationId: userInfo.organizationId
             };
-
-            res.redirect('http://localhost:3000');
+            conn.identity(function (err, idResponse) {
+                if (err) { throw err; }
+                console.log("User Name: " + idResponse.display_name);
+                req.session.userInfo = {
+                    username: idResponse.username,
+                    userDisplayName: idResponse.display_name
+                };
+                res.redirect('http://localhost:3000');
+            });
         })
+        .then(function () {})
         .catch(function (err) {
             res.json({message: 'Error!', error: err});
-        });
+        })
     },
     logout(req) {
         req.session.destroy();

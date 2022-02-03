@@ -1,6 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react';
+import ApexRunner from './components/ApexRunner';
+import Navigation from './components/Navigation';
 
 class App extends Component {
   state = { 
@@ -23,7 +24,7 @@ class App extends Component {
         result => {
           this.setState({ 
             loggedIn: result.data.loggedIn,
-            userId: result.data.userId 
+            username: result.data.userDisplayName 
           });
         }
       );
@@ -50,11 +51,30 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-            {this.loginSection()}
-        </header>
+      <div className="slds-grid slds-wrap">
+        <div className="slds-col slds-size_1-of-1">
+          <header>
+            <div className="slds-global-header slds-grid slds-grid_align-spread">
+              <div className="slds-global-header__item">
+                <div className="slds-global-header__logo logo">
+                  <span className="slds-assistive-text">Apex Sandbox</span>
+                </div>
+              </div>
+              <div className="slds-global-header__item">
+                {this.loginSection()}
+              </div>
+            </div>
+          </header>
+        </div>
+        <div className="slds-col slds-size_1-of-6">
+          <Navigation />
+        </div>
+        <div className="slds-col slds-size_2-of-6">
+          The problem statement goes here
+        </div>
+        <div className="slds-col slds-size_3-of-6">
+          User will type out the solution here
+        </div>
       </div>
     );
   }
@@ -62,14 +82,17 @@ class App extends Component {
   loginSection() {
     if (this.state.loggedIn) {
       return (
-        <div>
-          <p>You are logged in as: {this.state.userId}.</p>
-          <button onClick={this.logout}>Log out</button>
-        </div>);
+        <ul className="slds-global-actions">
+          <li className="slds-global-actions__item">You are logged in as: {this.state.username}</li>
+          <li className="slds-global-actions__item"><button className="slds-button slds-button_neutral" onClick={this.logout}>Log out</button></li>
+        </ul>);
     }
     else {
       return (
-        <button className="App-link" onClick={this.login}>
+        <button className="slds-button slds-button_brand" onClick={this.login}>
+          <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+            <use href="/assets/icons/utility-sprite/svg/symbols.svg#salesforce1"></use>
+          </svg>
           Log in with Salesforce
         </button>
       );
