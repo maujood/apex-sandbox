@@ -51,7 +51,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="slds-grid slds-wrap">
+      <div className="slds-grid slds-wrap grid_container">
         <div className="slds-col slds-size_1-of-1">
           <header>
             <div className="slds-global-header slds-grid slds-grid_align-spread">
@@ -73,7 +73,7 @@ class App extends Component {
           The problem statement goes here
         </div>
         <div className="slds-col slds-size_3-of-6">
-          User will type out the solution here
+          <ApexRunner />
         </div>
       </div>
     );

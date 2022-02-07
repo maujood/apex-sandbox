@@ -7,7 +7,7 @@ class Navigation extends React.Component {
 
     render() {
         return (
-            <div className="slds-border_right">
+            <div className="slds-border_right nav_container">
                 <nav class="slds-tree_container slds-p-top_small">
                     <ul aria-labelledby="treeheading" class="slds-tree" role="tree">
                         <li aria-level="1" role="treeitem">
