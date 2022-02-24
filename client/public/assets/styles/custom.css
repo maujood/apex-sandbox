@@ -2,10 +2,6 @@
     background-image: url(/assets/images/logo.svg);
 }
 
-.grid_container {
-    min-height: 100vh;
-}
-
-.nav_container {
-    background: white;
+html {
+    background-color:white;
 }

@@ -11,24 +11,33 @@ let db = {
             }
         });
     },
+    getPool() {
+        return pool;
+    },
     exec(query) {
         return new Promise(function (resolve, reject) {
+            let clientRef;
             pool.connect()
             .then((client) => {
+                clientRef = client;
                 return client.query(query);
             })
             .then((result) => {
+                clientRef.release();
                 resolve(result);
             })
         });
     },
     execWithParams(query, params) {
         return new Promise(function (resolve, reject) {
+            let clientRef;
             pool.connect()
             .then((client) => {
+                clientRef = client;
                 return client.query(query, params);
             })
             .then((result) => {
+                clientRef.release();
                 resolve(result);
             })
         });

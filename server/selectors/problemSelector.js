@@ -24,7 +24,7 @@ problemSelector = {
         return new Promise((resolve, reject) => {
             db.execWithParams('SELECT "Id", "Title", "ProblemStatement", "Method", "Hints", "TestCases" FROM problems WHERE "Active" = true AND "Id" = $1', [problemId])
             .then((result) => {
-                resolve(result.rows);
+                resolve(result.rows[0]);
             });
         });
     }
