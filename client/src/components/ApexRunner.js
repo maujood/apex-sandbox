@@ -1,14 +1,16 @@
 import React from 'react';
 import Editor from "@monaco-editor/react";
 import Executor from './Executor';
+import ProblemDisplay from './ProblemDisplay';
 import UserContext from './UserContext';
 
 class ApexRunner extends React.Component {
     state = {
-        execResults: "[]",
-        code: "",
-        problemTitle: "",
-        problemDescription: "",
+        execResults: '[]',
+        code: '',
+        problemTitle: '',
+        problemDescription: '',
+        problem: '{}',
         executeInProgress: false
     }
 
@@ -49,16 +51,17 @@ class ApexRunner extends React.Component {
         .then(result => {
             let localSolution = window.localStorage.getItem('problem/' + this.props.problemId);
             let localCode = localSolution ? JSON.parse(localSolution).code : null;
-
+            let resultStr = JSON.stringify(result);
             this.setState({
-                code: localCode ? localCode : result.Method,
-                problemTitle: result.Title,
-                problemDescription: result.ProblemStatement
+                code: localCode ? localCode : result.method,
+                problemTitle: result.title,
+                problemDescription: result.problem_statement,
+                problem: resultStr
             });
 
             //store the first line of the method in a variable to ensure.
             //will later be used for validation
-            this.firstLine = result.Method.split('\n')[0];
+            this.firstLine = result.method.split('\n')[0];
 
             //if the editor has been mounted, we set the state on the editor.
             if (this.editorRef) {
@@ -81,6 +84,20 @@ class ApexRunner extends React.Component {
             body: JSON.stringify({code: this.state.code, problemId: this.props.problemId})
         })
         .then(res => {
+            //if user is logged out, make sure to return an empty array
+            //as the execute results.
+            if (res.status === 401) {
+                console.log('Logged out. Do something.');
+                //if logged out, we need to reset user info.
+                if (this.props.onlogout) {
+                    this.props.onlogout();
+                }
+                return [];
+            }
+            else if (res.status === 500) {
+                console.log('Some other issue. Do something else.');
+                return [];
+            }
             return res.json();
         })
         .then(result => {
@@ -118,7 +135,7 @@ class ApexRunner extends React.Component {
                 <div class="slds-card__header slds-grid">
                     <header class="slds-media slds-media_center slds-has-flexi-truncate">
                     <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-standard-account" title="account">
+                        <span class="slds-icon_container slds-icon-standard-account" title="apex">
                         <svg class="slds-icon slds-icon_small" aria-hidden="true">
                             <use href="/assets/icons/standard-sprite/svg/symbols.svg#apex"></use>
                         </svg>
@@ -133,11 +150,11 @@ class ApexRunner extends React.Component {
                     </header>
                 </div>
                 <div class="slds-card__body slds-card__body_inner">
-                    <div className="slds-grid">
-                        <div class="slds-col slds-size_1-of-3 slds-p-around_medium">
-                            {this.state.problemDescription}
+                    <div className="slds-grid slds-wrap">
+                        <div class="slds-col slds-large-size_1-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_medium">
+                            <ProblemDisplay problem={this.state.problem} />
                         </div>
-                        <div class="slds-col slds-size_2-of-3 slds-p-around_medium">
+                        <div class="slds-col slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_medium">
                             <div className="slds-grid slds-wrap">
                                 <div class="slds-col slds-size_1-of-1">
                                     <Editor

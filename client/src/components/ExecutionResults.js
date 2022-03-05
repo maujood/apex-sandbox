@@ -1,21 +1,8 @@
 import React, { useContext } from 'react';
 import ExecutionResult from './ExecutionResult';
+import confetti from 'canvas-confetti';
 
 const ExecutionResults = (props) => {   
-    const config = {
-        angle: "135",
-        spread: "102",
-        startVelocity: "38",
-        elementCount: 70,
-        dragFriction: 0.12,
-        duration: "3730",
-        stagger: "18",
-        width: "10px",
-        height: "10px",
-        perspective: "515px",
-        colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
-    };
-
     if (props.loading) {
         return <div role="status" class="slds-spinner slds-spinner_small">
             <span class="slds-assistive-text">Loading</span>
@@ -26,10 +13,28 @@ const ExecutionResults = (props) => {
     else {
         let parsedResults = JSON.parse(props.executeResults);
         
+        if (parsedResults.length > 0) {
+            let allPassed = true;
+            for (let i=0; i<parsedResults.length; i++) {
+                if (!parsedResults[i].success || !parsedResults[i].compiled) {
+                    allPassed = false;
+                }
+            }
+            if (allPassed) {
+                confetti({
+                    particleCount: 200,
+                    spread: 360,
+                    origin: { y: 0.5 }
+                });
+            }
+        }
+
         return (<div>
             <div class="slds-card">
                 <div class="slds-card__body slds-card__body_inner">
-                    {parsedResults.map((result, i) => <ExecutionResult result={result} key={i} />)}
+                    <ul class="slds-has-dividers_bottom-space">
+                        {parsedResults.map((result, i) => <ExecutionResult result={result} testNumber={i+1} />)}
+                    </ul>
                 </div>
             </div>
         </div>)

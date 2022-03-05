@@ -1,13 +1,13 @@
-const problemSelector = require('./selectors/problemSelector');
+const problemDomain = require('./domain/problemDomain');
 const auth = require('./auth');
 
-let problem = {
+let problemRunner = {
     exec(id, code, req) {
         let conn = auth.getConnection(req);
-        return problemSelector.getProblemDetails(id)
+        return problemDomain.getProblemDetails(id)
         .then(details => {
             let promiseList = [];
-            details.TestCases.forEach(testCase => {
+            details.test_cases.forEach(testCase => {
                 let codeWithTests = code + '\n' + testCase;
                 console.log('About to execute: ' + codeWithTests);
                 promiseList.push(this.execSingle(conn, codeWithTests, testCase));
@@ -20,12 +20,18 @@ let problem = {
         return new Promise(function (resolve, reject) {
             conn.tooling.executeAnonymous(code, function(err, executeResponse) {
                 if (err) { reject(err); }
-                console.log('Execute response: ' + JSON.stringify(executeResponse));
-                executeResponse.testCode = testCode;
-                resolve(executeResponse);
+                //jsforce doesn't give access to the response code.
+                //if executeResponse is empty, we will assume the user has been logged out.
+                if (executeResponse == null || (executeResponse.name && executeResponse.name === 'invalid_grant')) {
+                    reject({message: 'Unauthorized'});
+                }
+                else {
+                    executeResponse.testCode = testCode;
+                    resolve(executeResponse);
+                }
             });
         });
     }
 }
 
-module.exports = problem;
+module.exports = problemRunner;

@@ -6,7 +6,6 @@ import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import LoginButton from './components/LoginButton';
 import { UserProvider } from './components/UserContext';
-import NavigationHardcoded from './components/NavigationHardcoded';
 
 class App extends Component {
   state = { 
@@ -55,7 +54,7 @@ class App extends Component {
   }
 
   logout = () => {
-    fetch('api/logout')
+    fetch('/api/logout')
     .then(() => {
       this.setInfo();
     })
@@ -79,15 +78,15 @@ class App extends Component {
               </div>
             </header>
           </div>
-          <div className="slds-col slds-size_1-of-6">
-            <NavigationHardcoded />
+          <div className="slds-col slds-large-size_1-of-6 slds-medium-size_1-of-1 slds-small-size_1-of-1">
+            <Navigation />
           </div>
-          <div className="slds-col slds-size_5-of-6">
+          <div className="slds-col slds-large-size_5-of-6 slds-medium-size_1-of-1 slds-small-size_1-of-1">
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />}>
               </Route>
-              <Route path="/problem/:problemId" element={<Problem />}>
+              <Route path="/problem/:problemId" element={<Problem onlogout={this.setInfo} />}>
               </Route>
               <Route
                 path="*"

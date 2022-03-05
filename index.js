@@ -4,8 +4,9 @@ const cluster = require('cluster');
 const session = require('express-session');
 const auth = require('./server/auth');
 const db = require('./server/db');
-const problemSelector = require('./server/selectors/problemSelector');
-const problem = require('./server/problem');
+const problemDomain = require('./server/domain/problemDomain');
+const problemAttemptsDomain = require('./server/domain/problemAttemptsDomain');
+const problemRunner = require('./server/problemRunner');
 //const { json } = require('express');
 
 
@@ -16,7 +17,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const ENV = process.env.ENV_NAME || 'production';
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const DATABASE_URL = process.env.DATABASE_URL;
-const SITE_BASEURL = process.env.SITE_BASEURL
+const SITE_BASEURL = process.env.SITE_BASEURL;
 
 
 if (cluster.isMaster) {
@@ -56,8 +57,15 @@ else {
         res.json({data: auth.getUserInfo(req)});
     });
 
+    app.get('/api/problemList', function (req, res) {
+        problemDomain.getCategoriesWithProblems(auth.getDbUserId(req))
+        .then((categoriesWithProblems) => {
+            res.json(categoriesWithProblems);
+        });
+    });
+
     app.get('/api/problem/:id', function(req, res) {
-        problemSelector.getProblemDetails(req.params.id)
+        problemDomain.getProblemDetails(req.params.id)
         .then((row) => {
             console.log('Problem Details: ' + JSON.stringify(row));
             res.json(row);
@@ -70,14 +78,29 @@ else {
     app.post('/api/executeApex', function (req, res) {
         console.log('Body: ' + req.body.code);
         console.log('Problem ID: ' + req.body.problemId);
-        problem.exec(req.body.problemId, req.body.code, req)
+        problemRunner.exec(req.body.problemId, req.body.code, req)
         .then(execResult => {
-            console.log(JSON.stringify(execResult));
-            res.json(execResult);
+            let success = false;
+            if (execResult.length > 0) success = execResult.every(_ => _.success);
+            problemAttemptsDomain.logAttempt(auth.getDbUserId(req), req.body.problemId, req.body.code, success)
+            .then((attemptRow) => {
+                res.json(execResult);
+            });
         })
         .catch(err => {
             console.log('Error executing: '+ JSON.stringify(err));
-            res.json(err);
+            if (err.message === 'Unauthorized') {
+                //user needs to log in again
+                auth.logout(req);
+                res.status(401).json({message: 'Unauthorized'});
+            }
+            else if (err.name && err.name === 'invalid_grant') {
+                auth.logout(req);
+                res.status(401).json({message: 'Unauthorized'});
+            }
+            else {
+                res.status(500).json(err);
+            }
         });
     });
     

@@ -1,4 +1,5 @@
 const jsforce = require('jsforce');
+const userDomain = require('./domain/userDomain');
 
 let oauth2;
 
@@ -11,22 +12,22 @@ let auth = {
             redirectUri : loginCallback
         });
     },
-    isLoggedIn() {
-        
-    },
     getConnection(req) {
         let authInfo = req.session.authInfo;
         let conn = new jsforce.Connection({
+            logLevel: 'DEBUG',
             oauth2: oauth2,
             instanceUrl : authInfo.instanceUrl,
             accessToken : authInfo.accessToken,
             refreshToken : authInfo.refreshToken
         });
         conn.on("refresh", function(accessToken, res) {
+            console.log('Refresh handler received accessToken: ' + accessToken);
             let authInfo = req.session.authInfo;
             authInfo.accessToken = accessToken
             req.session.authInfo = authInfo;
         });
+
         return conn;
     },
     getUserInfo(req) {
@@ -49,6 +50,9 @@ let auth = {
 
         return info;
     },
+    getDbUserId(req) {
+        return req.session.userInfo.dbId;
+    },
     getLoginUrl(state) {
         return oauth2.getAuthorizationUrl({ 
             scope : 'api refresh_token',
@@ -65,23 +69,28 @@ let auth = {
             }
             conn.authorize(code)
             .then(function(userInfo) {
-                // Now you can get the access token, refresh token, and instance URL information.
-                // Save them to establish connection next time.
-                req.session.authInfo = { 
-                    accessToken: conn.accessToken,
-                    refreshToken: conn.refreshToken,
-                    instanceUrl: conn.instanceUrl,
-                    userId: userInfo.id,
-                    organizationId: userInfo.organizationId
-                };
                 conn.identity(function (err, idResponse) {
                     if (err) { throw err; }
                     console.log("User Name: " + idResponse.display_name);
-                    req.session.userInfo = {
-                        username: idResponse.username,
-                        userDisplayName: idResponse.display_name
-                    };
-                    resolve(path);
+                    console.log("User Email: " + idResponse.email);
+                    userDomain.createOrGetUserRecord(idResponse.username, idResponse.email)
+                    .then((userRecord) => {
+                        console.log("User's database ID: " + userRecord.id);
+                        req.session.authInfo = { 
+                            accessToken: conn.accessToken,
+                            refreshToken: conn.refreshToken,
+                            instanceUrl: conn.instanceUrl,
+                            userId: userInfo.id,
+                            organizationId: userInfo.organizationId
+                        };
+                        req.session.userInfo = {
+                            dbId: userRecord.id,
+                            username: idResponse.username,
+                            userDisplayName: idResponse.display_name,
+                            userEmail: idResponse.email
+                        };
+                        resolve(path);
+                    });
                 });
             })
             .catch(function (err) {
@@ -90,7 +99,8 @@ let auth = {
         });
     },
     logout(req) {
-        req.session.destroy(req.sessionId);
+        console.log('Destroying session with Session ID: ' + req.sessionID);
+        req.session.destroy();
     }
 }
 
