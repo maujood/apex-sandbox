@@ -51,7 +51,10 @@ let auth = {
         return info;
     },
     getDbUserId(req) {
-        return req.session.userInfo.dbId;
+        if (req.session && req.session.userInfo && req.session.userInfo.dbId) {
+            return req.session.userInfo.dbId;
+        }
+        return null;
     },
     getLoginUrl(state) {
         return oauth2.getAuthorizationUrl({ 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LoginButton = () => {
+const LoginButton = (props) => {
     function login () {
         fetch('/api/loginurl/' + encodeURIComponent(window.location.pathname))
         .then(res => {
@@ -13,7 +13,12 @@ const LoginButton = () => {
         );
     }
 
-    return <button className="slds-button slds-button_brand" onClick={login}>
+    let additionalClasses = '';
+    if (props.bigbutton) {
+        additionalClasses = ' slds-p-around_small slds-text-heading_medium';
+    }
+
+    return <button className={'slds-button slds-button_brand' + additionalClasses} onClick={login}>
         <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
         <use href="/assets/icons/utility-sprite/svg/symbols.svg#salesforce1"></use>
         </svg>
