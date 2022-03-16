@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import ExecutionResult from './ExecutionResult';
 import confetti from 'canvas-confetti';
 
 const ExecutionResults = (props) => {   
+    const [confettiFired, setConfettiFired] = useState(false);
+
     if (props.loading) {
+        //reset confetti
+        if (confettiFired) setConfettiFired(false);
         return <div role="status" class="slds-spinner slds-spinner_small">
             <span class="slds-assistive-text">Loading</span>
             <div class="slds-spinner__dot-a"></div>
@@ -20,7 +24,8 @@ const ExecutionResults = (props) => {
                     allPassed = false;
                 }
             }
-            if (allPassed) {
+            if (allPassed && !confettiFired) {
+                setConfettiFired(true);
                 confetti({
                     particleCount: 200,
                     spread: 360,
