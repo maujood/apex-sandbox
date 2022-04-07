@@ -23,7 +23,9 @@ const ProblemHint = (props) => {
         </button>
         </h3>
         <div aria-hidden="true" class="slds-section__content" id={'hint' + props.index}>
-        <p>{props.text}</p>
+        <p>
+            <div dangerouslySetInnerHTML={{__html: props.text}}></div>
+        </p>
         </div>
     </div>);
 }
