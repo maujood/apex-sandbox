@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginButton from './LoginButton';
-import HomeFAQItem from './HomeFAQItem';
 
 const HomePage = (props) => {   
     return <article class="slds-card slds-m-around_x-large">
@@ -24,13 +23,12 @@ const HomePage = (props) => {
             </div>
             <div class="slds-card__body slds-card__body_inner">
                 <div className="slds-grid slds-wrap"></div>
-                <p class="slds-text-heading_medium slds-p-top_medium">Practice makes experts.</p>
+                <p class="slds-text-heading_medium slds-p-top_medium">Practice makes experts. Take your Apex journey to the next level with a growing collection of Apex practice problems!</p>
                 <p class="slds-text-heading_medium slds-p-top_medium">It's easy. Log in with a Salesforce Developer Edition (sign up on <a href="https://developer.salesforce.com/signup" target="_blank" rel="noreferrer">developer.salesforce.com/signup</a>) and start knocking out problems!</p>
                 <div class="slds-p-vertical_x-large slds-align_absolute-center">
                     <LoginButton bigbutton />
                 </div>
-
-                <p class="slds-text-heading_medium slds-p-top_medium">Never written code before? Check back soon for lessons to get you started!</p>
+                <p class="slds-text-heading_medium slds-p-top_medium">Haven't started your Apex journey yet? Learners consistently tell me they found <a href="https://www.pluralsight.com/courses/apex-absolute-beginner-guide-coding-salesforce">Apex Academy on Pluralsight</a> and <a href="https://www.sfdc99.com/beginner-tutorials/">David Liu's Apex Tutorials</a> to be the best resources out there. I will also be putting together an Apex series together in the future - follow me on <a href="https://twitter.com/mehdimaujood">Twitter</a> or <a href="https://www.linkedin.com/in/maujood/">LinkedIn</a> to hear about it!</p>
             </div>
         </div>
     </article>;
