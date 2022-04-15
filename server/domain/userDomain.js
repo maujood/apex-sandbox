@@ -13,7 +13,7 @@ userDomain = {
                 else {
                     //if the user with the given email does not exist, create one
                     db.execWithParams('INSERT INTO users(username, email) VALUES($1, $2) RETURNING id, username, email', [username, email])
-                    .then(() => {
+                    .then((result) => {
                         resolve(result.rows[0]);
                     });
                 }
