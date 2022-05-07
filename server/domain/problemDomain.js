@@ -24,7 +24,7 @@ problemDomain = {
     },
 
     getProblemDetails(problemId) {
-        return db.execWithParams('SELECT id, title, problem_statement, method, hints, test_cases FROM problems WHERE active = true AND id = $1', [problemId])
+        return db.execWithParams('SELECT id, title, problem_statement, method, hints, test_cases FROM problems WHERE id = $1', [problemId])
             .then((result) => {
                 return result.rows[0];
             });
