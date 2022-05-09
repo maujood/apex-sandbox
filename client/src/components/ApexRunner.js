@@ -144,7 +144,7 @@ class ApexRunner extends React.Component {
                     </div>
                     <div class="slds-media__body">
                         <h2 class="slds-card__header-title">
-                            <span>{this.state.problemTitle}</span>
+                            <span>#{this.props.problemId} - {this.state.problemTitle}</span>
                         </h2>
                     </div>
                     </header>
