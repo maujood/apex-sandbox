@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Problem from './components/Problem';
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
+import AboutUs from './components/AboutUs';
 import LoginButton from './components/LoginButton';
 import { UserProvider } from './components/UserContext';
 
@@ -85,6 +86,8 @@ class App extends Component {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />}>
+              </Route>
+              <Route path="/about" element={<AboutUs />}>
               </Route>
               <Route path="/problem/:problemId" element={<Problem onlogout={this.setInfo} />}>
               </Route>
