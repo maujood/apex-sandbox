@@ -4,7 +4,12 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     
-
+    <script>
+      var host = "www.apexsandbox.io";
+      if ((host == window.location.host) && (window.location.protocol != "https:")){
+        window.location.protocol = "https";
+      }
+    </script>
     <title>ApexSandbox.io</title>
     <link rel="stylesheet" type="text/css" href="/assets/styles/salesforce-lightning-design-system.css" />
     <link rel="stylesheet" type="text/css" href="/assets/styles/custom.css" />    

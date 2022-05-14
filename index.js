@@ -9,7 +9,6 @@ const problemAttemptsDomain = require('./server/domain/problemAttemptsDomain');
 const problemRunner = require('./server/problemRunner');
 //const { json } = require('express');
 
-
 const PORT = process.env.PORT;
 const LOGIN_CALLBACK = process.env.LOGIN_CALLBACK;
 const CLIENT_ID = process.env.CLIENT_ID;
