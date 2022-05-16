@@ -30,6 +30,23 @@ problemDomain = {
             });
     },
 
+    createProblem(problemJson, userId) {
+        return db.execWithParams('INSERT INTO public.problems(' +
+            'title, problem_statement, method, hints, test_cases, category_id, ordinal, contributor_id) ' +
+            'VALUES ($1, $2, $3, $4, $5, $6, $7, $8); ' +
+            'RETURNING id',
+            [
+                problemJson.title,
+                problemJson.problem_statement,
+                problemJson.method,
+                problemJson.hints,
+                problemJson.test_cases,
+                problemJson.category_id,
+                problemJson.ordinal,
+                userId
+            ]);
+    },
+
     getCategoriesWithProblems(userId) {
         return this.getProblemList(userId)
             .then(function (problems) {
