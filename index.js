@@ -74,6 +74,27 @@ else {
         });
     });
 
+    app.post('/api/problem/create', function(req, res) {
+        let problemDetails = req.body;
+        let dbUserId = auth.getDbUserId(req);
+        if (dbUserId == null) {
+            res.send('Error');
+        }
+        userDomain.userIsContributor()
+        .then((isContributor) => {
+            if (isContributor) {
+                problemDomain.createProblem(problemDetails, userId);
+            }
+            else {
+                res.send('Error');
+            }
+        });
+        problemDomain.createProblem(problemDetails, auth.getDbUserId(req))
+        .then((problemId) => {
+            res.json({ problemId });
+        });
+    })
+
     app.post('/api/executeApex', function (req, res) {
         console.log('Body: ' + req.body.code);
         console.log('Problem ID: ' + req.body.problemId);

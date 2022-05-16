@@ -19,6 +19,14 @@ userDomain = {
                 }
             });
         });
+    },
+
+    userIsContributor(dbUserId) {
+        return db.execWithParams('SELECT contributor FROM public.users WHERE id = $1', [dbUserId])
+        .then((result) => {
+            //return false if null
+            return result.rows[0].contributor == true ? true : false;
+        });
     }
 }
 

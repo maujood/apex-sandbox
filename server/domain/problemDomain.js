@@ -44,7 +44,24 @@ problemDomain = {
                 problemJson.category_id,
                 problemJson.ordinal,
                 userId
-            ]);
+            ])
+        .then((result) => {
+            return result.rows[0];
+        });
+    },
+
+    editProblem(problemJson) {
+        return db.execWithParams('UPDATE public.problems ' +
+        'SET title=$1, problem_statement=$2, method=$3, hints=$4, test_cases=$5, category_id=$6 ' +
+        'WHERE id = $7;', [
+            problemJson.title,
+            problemJson.problem_statement,
+            problemJson.method,
+            problemJson.hints,
+            porblemJson.test_cases,
+            problemJson.category_id,
+            problemJson.id
+        ]);
     },
 
     getCategoriesWithProblems(userId) {
