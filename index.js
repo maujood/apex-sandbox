@@ -63,7 +63,7 @@ else {
         });
     });
 
-    app.get('/api/problem/:id', function(req, res) {
+    app.get('/api/problem/view/:id', function(req, res) {
         problemDomain.getProblemDetails(req.params.id)
         .then((row) => {
             console.log('Problem Details: ' + JSON.stringify(row));
@@ -84,6 +84,27 @@ else {
         .then((isContributor) => {
             if (isContributor) {
                 problemDomain.createProblem(problemDetails, userId);
+            }
+            else {
+                res.send('Error');
+            }
+        });
+        problemDomain.createProblem(problemDetails, auth.getDbUserId(req))
+        .then((problemId) => {
+            res.json({ problemId });
+        });
+    });
+
+    app.post('/api/problem/edit/:id', function(req, res) {
+        let problemDetails = req.body;
+        let dbUserId = auth.getDbUserId(req);
+        if (dbUserId == null) {
+            res.send('Error');
+        }
+        userDomain.userIsContributor()
+        .then((isContributor) => {
+            if (isContributor) {
+                problemDomain.editProblem(problemDetails);
             }
             else {
                 res.send('Error');

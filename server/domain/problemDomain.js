@@ -58,7 +58,7 @@ problemDomain = {
             problemJson.problem_statement,
             problemJson.method,
             problemJson.hints,
-            porblemJson.test_cases,
+            problemJson.test_cases,
             problemJson.category_id,
             problemJson.id
         ]);
