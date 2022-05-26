@@ -2,6 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Problem from './components/Problem';
+import ProblemUpsert from './components/ProblemUpsert';
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import LoginButton from './components/LoginButton';
@@ -85,6 +86,10 @@ class App extends Component {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />}>
+              </Route>
+              <Route path="/problem/create" element={<ProblemUpsert onlogout={this.setInfo} />}>
+              </Route>
+              <Route path="/problem/edit/:urlProblemId" element={<ProblemUpsert onlogout={this.setInfo} />}>
               </Route>
               <Route path="/problem/:problemId" element={<Problem onlogout={this.setInfo} />}>
               </Route>

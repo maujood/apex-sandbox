@@ -24,7 +24,10 @@ problemDomain = {
     },
 
     getProblemDetails(problemId) {
-        return db.execWithParams('SELECT id, title, problem_statement, method, hints, test_cases FROM problems WHERE id = $1', [problemId])
+        return db.execWithParams('SELECT p.id id, title, problem_statement, method, hints, test_cases, u.name, u.url ' + 
+                'FROM problems p left join users u on p.contributor_id = u.id ' + 
+                'WHERE p.id = $1'
+            , [problemId])
             .then((result) => {
                 return result.rows[0];
             });
@@ -33,14 +36,14 @@ problemDomain = {
     createProblem(problemJson, userId) {
         return db.execWithParams('INSERT INTO public.problems(' +
             'title, problem_statement, method, hints, test_cases, category_id, ordinal, contributor_id) ' +
-            'VALUES ($1, $2, $3, $4, $5, $6, $7, $8); ' +
-            'RETURNING id',
+            'VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ' +
+            'RETURNING id;',
             [
                 problemJson.title,
                 problemJson.problem_statement,
                 problemJson.method,
-                problemJson.hints,
-                problemJson.test_cases,
+                JSON.parse(problemJson.hints),
+                JSON.parse(problemJson.test_cases),
                 problemJson.category_id,
                 problemJson.ordinal,
                 userId
@@ -57,8 +60,8 @@ problemDomain = {
             problemJson.title,
             problemJson.problem_statement,
             problemJson.method,
-            problemJson.hints,
-            problemJson.test_cases,
+            JSON.parse(problemJson.hints),
+            JSON.parse(problemJson.test_cases),
             problemJson.category_id,
             problemJson.id
         ]);

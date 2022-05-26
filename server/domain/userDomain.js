@@ -22,10 +22,13 @@ userDomain = {
     },
 
     userIsContributor(dbUserId) {
-        return db.execWithParams('SELECT contributor FROM public.users WHERE id = $1', [dbUserId])
-        .then((result) => {
-            //return false if null
-            return result.rows[0].contributor == true ? true : false;
+        return new Promise((resolve, reject) => {
+            db.execWithParams('SELECT contributor FROM users WHERE id = $1', [dbUserId])
+            .then((result) => {
+                console.log('contributor: ' + JSON.stringify(result));
+                if (result.rows == null || result.rows.length === 0) resolve(false);
+                resolve(result.rows[0].contributor === "1" ? true : false);
+            });
         });
     }
 }

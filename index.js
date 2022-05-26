@@ -76,43 +76,55 @@ else {
 
     app.post('/api/problem/create', function(req, res) {
         let problemDetails = req.body;
+        problemDetails.ordinal = 1;
         let dbUserId = auth.getDbUserId(req);
         if (dbUserId == null) {
-            res.send('Error');
+            res.status(401).json({message: 'Unauthorized'});
+            return;
         }
-        userDomain.userIsContributor()
+        userDomain.userIsContributor(dbUserId)
         .then((isContributor) => {
             if (isContributor) {
-                problemDomain.createProblem(problemDetails, userId);
+                console.log('About to create problem: ' + JSON.stringify(problemDetails));
+                return problemDomain.createProblem(problemDetails, dbUserId);
             }
             else {
-                res.send('Error');
+                res.status(401).json({message: 'Unauthorized'});
             }
-        });
-        problemDomain.createProblem(problemDetails, auth.getDbUserId(req))
-        .then((problemId) => {
-            res.json({ problemId });
+        })
+        .then((row) => {
+            res.json({ problem_id: row.id });
+        })
+        .catch(error => {
+            console.log('Error happened: ' + JSON.stringify(error));
+            res.status(500).json({message: 'error', error: error})
         });
     });
 
-    app.post('/api/problem/edit/:id', function(req, res) {
+    app.post('/api/problem/edit', function(req, res) {
         let problemDetails = req.body;
+        problemDetails.ordinal = 1;
         let dbUserId = auth.getDbUserId(req);
         if (dbUserId == null) {
-            res.send('Error');
+            res.status(401).json({message: 'Unauthorized'});
+            return;
         }
-        userDomain.userIsContributor()
+        userDomain.userIsContributor(dbUserId)
         .then((isContributor) => {
             if (isContributor) {
-                problemDomain.editProblem(problemDetails);
+                console.log('About to create problem: ' + JSON.stringify(problemDetails));
+                return problemDomain.editProblem(problemDetails);
             }
             else {
-                res.send('Error');
+                res.status(401).json({message: 'Unauthorized'});
             }
-        });
-        problemDomain.createProblem(problemDetails, auth.getDbUserId(req))
-        .then((problemId) => {
-            res.json({ problemId });
+        })
+        .then(() => {
+            res.json({ problem_id: problemDetails.id });
+        })
+        .catch(error => {
+            console.log('Error happened: ' + JSON.stringify(error));
+            res.status(500).json({message: 'error', error: error})
         });
     })
 

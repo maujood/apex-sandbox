@@ -2,7 +2,7 @@ import React from 'react';
 import Editor from "@monaco-editor/react";
 import Executor from './Executor';
 import ProblemDisplay from './ProblemDisplay';
-import UserContext from './UserContext';
+import ContributorInfo from './ContributorInfo';
 
 class ApexRunner extends React.Component {
     state = {
@@ -11,6 +11,8 @@ class ApexRunner extends React.Component {
         problemTitle: '',
         problemDescription: '',
         problem: '{}',
+        authorName: '',
+        authorUrl: '',
         executeInProgress: false
     }
 
@@ -44,7 +46,7 @@ class ApexRunner extends React.Component {
     }
 
     getProblem = () => {
-        fetch('/api/problem/' + parseInt(this.props.problemId))
+        fetch('/api/problem/view/' + parseInt(this.props.problemId))
         .then(res => {
             return res.json();
         })
@@ -56,6 +58,8 @@ class ApexRunner extends React.Component {
                 code: localCode ? localCode : result.method,
                 problemTitle: result.title,
                 problemDescription: result.problem_statement,
+                authorName: result.name,
+                authorUrl: result.url,
                 problem: resultStr
             });
 
@@ -134,19 +138,22 @@ class ApexRunner extends React.Component {
             <article class="slds-card slds-m-around_x-large">
                 <div class="slds-card__header slds-grid">
                     <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                    <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-standard-account" title="apex">
-                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                            <use href="/assets/icons/standard-sprite/svg/symbols.svg#apex"></use>
-                        </svg>
-                        <span class="slds-assistive-text">{}</span>
-                        </span>
-                    </div>
-                    <div class="slds-media__body">
-                        <h2 class="slds-card__header-title">
-                            <span>#{this.props.problemId} - {this.state.problemTitle}</span>
-                        </h2>
-                    </div>
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-account" title="apex">
+                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                <use href="/assets/icons/standard-sprite/svg/symbols.svg#apex"></use>
+                            </svg>
+                            <span class="slds-assistive-text">{}</span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span>#{this.props.problemId} - {this.state.problemTitle}</span>
+                            </h2>
+                        </div>
+                        <div class="slds-no-flex">
+                            <ContributorInfo authorName={this.state.authorName} authorUrl={this.state.authorUrl} />
+                        </div>
                     </header>
                 </div>
                 <div class="slds-card__body slds-card__body_inner">
