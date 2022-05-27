@@ -128,7 +128,7 @@ function ProblemUpsert(props) {
     const renderLink = () => {
         if (problemId) {
             const linkText = '/problem/' + problemId;
-            return <a href={linkText} target="_blank" rel="noreferrer">Test this problem in a new window.</a>;
+            return <p><a href={linkText} target="_blank" rel="noreferrer">Test this problem in a new window.</a>. If the problem is inactive, please reach out to the administrator to activate it.</p>;
         }
         return null;
     }
@@ -155,7 +155,7 @@ function ProblemUpsert(props) {
 
             <div class="slds-card__body slds-card__body_inner">
                 <p>Problem ID: {problemId}</p>
-                <p>{renderLink()}. If the problem is inactive, please reach out to the administrator to activate it.</p>
+                {renderLink()}
                 <div class="slds-form-element">
                     <label class="slds-form-element__label" for="problem-title">
                         <abbr class="slds-required" title="required">* </abbr>Title</label>
@@ -175,9 +175,7 @@ function ProblemUpsert(props) {
                     <label class="slds-form-element__label" for="initial-code">
                         <abbr class="slds-required" title="required">* </abbr>Initial Code</label>
                     <div class="slds-form-element__control">
-                    <textarea id="initial-code" value={initialCode} onChange={initialCodeChanged} placeholder="public Integer diff(Integer a, Integer b) {
-                        //code here
-    }" class="slds-textarea" rows="4"></textarea>
+                    <textarea id="initial-code" value={initialCode} onChange={initialCodeChanged} placeholder="public Integer diff(Integer a, Integer b) { /*make sure you write this as 3 lines*/ }" class="slds-textarea" rows="4"></textarea>
                     </div>
                 </div>
 
@@ -185,20 +183,14 @@ function ProblemUpsert(props) {
                     <label class="slds-form-element__label" for="problem-hints">
                         <abbr class="slds-required" title="required">* </abbr>Hints</label>
                     <div class="slds-form-element__control">
-                    <textarea id="problem-hints" value={hints} onChange={hintsChanged} placeholder="This is the first hint.
-                        ###
-                        Notice the triple number symbol above to separate hints. Use the &lt;code&gt;blahBlah&lt;/code&gt; method. Docs: &lt;a href='https://developer.salesforce.com/docs'&gt;Notice the single quotes in the href&lt;/a&gt;" class="slds-textarea" rows="4"></textarea>
+                        <textarea id="problem-hints" value={hints} onChange={hintsChanged} placeholder="Separate hints using ### on a new line. You can use HTML." class="slds-textarea" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="slds-form-element">
                     <label class="slds-form-element__label" for="test-cases">
                         <abbr class="slds-required" title="required">* </abbr>Test Cases</label>
                     <div class="slds-form-element__control">
-                    <textarea id="test-cases" value={testCases} onChange={testCasesChanged} placeholder="Test cases are separated just like hints.
-                        ###
-                        In order to continue living a happy life, type the test cases out in VS Code with Apex language selection and paste them here.
-                        ###
-                        If you have double quotes in your test case, make sure you escape them" class="slds-textarea" rows="15"></textarea>
+                        <textarea id="test-cases" value={testCases} onChange={testCasesChanged} placeholder="Test cases are separated just like hints: ### on a newline. In order to continue living a happy life, type the test cases out in VS Code with Apex language selection and paste them here." class="slds-textarea" rows="15"></textarea>
                     </div>
                 </div>
                 <div class="slds-form-element">
