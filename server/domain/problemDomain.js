@@ -42,8 +42,8 @@ problemDomain = {
                 problemJson.title,
                 problemJson.problem_statement,
                 problemJson.method,
-                JSON.parse(problemJson.hints),
-                JSON.parse(problemJson.test_cases),
+                problemJson.hints,
+                problemJson.test_cases,
                 problemJson.category_id,
                 problemJson.ordinal,
                 userId
@@ -60,8 +60,8 @@ problemDomain = {
             problemJson.title,
             problemJson.problem_statement,
             problemJson.method,
-            JSON.parse(problemJson.hints),
-            JSON.parse(problemJson.test_cases),
+            problemJson.hints,
+            problemJson.test_cases,
             problemJson.category_id,
             problemJson.id
         ]);

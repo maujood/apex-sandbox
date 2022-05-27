@@ -16,8 +16,8 @@ function ProblemUpsert(props) {
             setTitle(problemInfo.title);
             setProblemStatement(problemInfo.problem_statement);
             setInitialCode(problemInfo.method);
-            setHints(JSON.stringify(problemInfo.hints));
-            setTestCases(JSON.stringify(problemInfo.test_cases));
+            setHints(arrayToString(problemInfo.hints));
+            setTestCases(arrayToString(problemInfo.test_cases));
             setCategory(problemInfo.category_id);
         });
     }
@@ -54,13 +54,21 @@ function ProblemUpsert(props) {
         setCategory(event.target.value);
     }
 
+    const arrayToString = (arr) => {
+        return arr.join('\n###\n');
+    }
+
+    const stringToArray = (str) => {
+        return str.split('\n###\n');
+    }
+
     const submitProblem = (event) => {
         const problemJson = {
             title: title,
             problem_statement: problemStatement,
             method: initialCode,
-            hints: hints,
-            test_cases: testCases,
+            hints: stringToArray(hints),
+            test_cases: stringToArray(testCases),
             category_id: category
         }
         let saveUrl = '/api/problem/create';
@@ -90,8 +98,8 @@ function ProblemUpsert(props) {
                 return {};
             }
             else if (res.status === 500) {
-                alert('There was an error submitting this. Check the console for possible information.')
                 console.log(res.json());
+                alert('There was an error submitting this. Check the console for possible information.');
                 return {};
             }
             return res.json();
