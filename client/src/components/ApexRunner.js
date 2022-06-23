@@ -139,11 +139,10 @@ class ApexRunner extends React.Component {
                 <div class="slds-card__header slds-grid">
                     <header class="slds-media slds-media_center slds-has-flexi-truncate">
                         <div class="slds-media__figure">
-                            <span class="slds-icon_container slds-icon-standard-account" title="apex">
+                            <span class="slds-icon_container slds-icon-standard-account">
                             <svg class="slds-icon slds-icon_small" aria-hidden="true">
                                 <use href="/assets/icons/standard-sprite/svg/symbols.svg#apex"></use>
                             </svg>
-                            <span class="slds-assistive-text">{}</span>
                             </span>
                         </div>
                         <div class="slds-media__body">

@@ -20,7 +20,7 @@ const Navigation = (props) => {
     }
     
     return (<div className="nav_container">
-        <nav class="slds-tree_container slds-p-top_small">
+        <nav class="slds-tree_container slds-p-top_small" role="navigation">
             <ul aria-labelledby="treeheading" class="slds-tree" role="tree">
                 <li aria-level="1" role="treeitem">
                     <div class="slds-tree__item">

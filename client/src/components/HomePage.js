@@ -7,11 +7,10 @@ const HomePage = (props) => {
             <div class="slds-card__header slds-grid">
                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
                     <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-standard-account" title="apex">
+                        <span class="slds-icon_container slds-icon-standard-account">
                             <svg class="slds-icon slds-icon_small" aria-hidden="true">
                                 <use href="/assets/icons/standard-sprite/svg/symbols.svg#apex"></use>
                             </svg>
-                            <span class="slds-assistive-text">{}</span>
                         </span>
                     </div>
                     <div class="slds-media__body">
@@ -22,7 +21,6 @@ const HomePage = (props) => {
                 </header>
             </div>
             <div class="slds-card__body slds-card__body_inner">
-                <div className="slds-grid slds-wrap"></div>
                 <p class="slds-text-heading_medium slds-p-top_medium">Practice makes experts. Take your Apex journey to the next level with a growing collection of Apex practice problems!</p>
                 <p class="slds-text-heading_medium slds-p-top_medium">It's easy and free. Log in with a Salesforce Developer Edition (sign up on <a href="https://developer.salesforce.com/signup" target="_blank" rel="noreferrer">developer.salesforce.com/signup</a>) and start knocking out problems!</p>
                 <div class="slds-p-vertical_x-large slds-align_absolute-center">

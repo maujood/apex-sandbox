@@ -4,6 +4,8 @@ import confetti from 'canvas-confetti';
 
 const ExecutionResults = (props) => {   
     const [confettiFired, setConfettiFired] = useState(false);
+    let successCount = 0;
+    let failureCount = 0;
 
     if (props.loading) {
         //reset confetti
@@ -22,6 +24,10 @@ const ExecutionResults = (props) => {
             for (let i=0; i<parsedResults.length; i++) {
                 if (!parsedResults[i].success || !parsedResults[i].compiled) {
                     allPassed = false;
+                    failureCount++;
+                }
+                else {
+                    successCount++;
                 }
             }
             if (allPassed && !confettiFired) {
@@ -34,9 +40,20 @@ const ExecutionResults = (props) => {
             }
         }
 
+        let executionSummary = () => {
+            if (successCount > 0 && failureCount === 0) {
+                return <p>All tests passed successfully!</p>
+            }
+            else if (successCount > 0 || failureCount > 0) {
+                return <p>{failureCount} test(s) failed, {successCount} test(s) passed.</p>
+            }
+            return null;
+        }
+
         return (<div>
             <div class="slds-card">
                 <div class="slds-card__body slds-card__body_inner">
+                    {executionSummary()}
                     <ul class="slds-has-dividers_bottom-space">
                         {parsedResults.map((result, i) => <ExecutionResult result={result} testNumber={i+1} />)}
                     </ul>
