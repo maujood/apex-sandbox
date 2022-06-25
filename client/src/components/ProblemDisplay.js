@@ -11,6 +11,7 @@ const ProblemDisplay = (props) => {
         {hints.map((text, i) => {
             return <ProblemHint text={text} key={i} index={i+1} />
         })}
+        <p>Discuss this problem on the <a href="https://trailhead.salesforce.com/trailblazer-community/groups/0F94S000000kJb2SAE" target="_blank" rel="noreferrer">ApexSandbox.io Trailblazer Community Group</a></p>
     </div>);
 }
 
