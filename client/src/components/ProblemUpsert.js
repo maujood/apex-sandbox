@@ -200,6 +200,7 @@ function ProblemUpsert(props) {
                         <div class="slds-select_container">
                             <select id="problem-category" value={category} onChange={categoryChanged} class="slds-select">
                                 <option value="1">Apex 101</option>
+                                <option value="7">Apex Language Features</option>
                                 <option value="2">SObjects</option>
                                 <option value="3">Lists</option>
                                 <option value="4">Sets</option>
