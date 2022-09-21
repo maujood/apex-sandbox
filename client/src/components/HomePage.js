@@ -27,9 +27,9 @@ const HomePage = (props) => {
                     <LoginButton bigbutton />
                 </div>
                 <p class="slds-text-heading_medium slds-p-top_medium">ApexSandbox.io now has a home on Trailblazer Communities! Join the <a href="https://trailhead.salesforce.com/trailblazer-community/groups/0F94S000000kJb2SAE" target="_blank" rel="noreferrer">ApexSandbox.io Trailblazer Community Group</a> to get help, ask questions, and discuss solutions to problems</p>
+                <p class="slds-text-heading_medium slds-p-top_medium">Showcase your solutions on GitHub! Check out the <a href="https://chrome.google.com/webstore/detail/apexsync/fnhpgladlghhekaggcolmidhinhckheh" target="_blank">ApexSync Chrome Extension</a> by <a href="https://www.linkedin.com/in/ankush-sarsewar/" target="_blank">Ankush Sarsewar</a> that lets you sync your ApexSandbox.io solutions to a GitHub repo in just one click!</p>
                 <p class="slds-text-heading_medium slds-p-top_medium">Haven't started your Apex journey yet? Learners consistently tell me they found <a href="https://www.pluralsight.com/courses/apex-absolute-beginner-guide-coding-salesforce">Apex Academy on Pluralsight</a> and <a href="https://www.sfdc99.com/beginner-tutorials/">David Liu's Apex Tutorials</a> to be the best resources out there. I will also be putting together an Apex series together in the future - follow me on <a href="https://twitter.com/mehdimaujood">Twitter</a> or <a href="https://www.linkedin.com/in/maujood/">LinkedIn</a> to hear about it!</p>
                 <p class="slds-text-heading_medium slds-p-top_medium">Have feedback? Wish to contribute? Just want to network? The team will be excited to hear from you: <a href="https://www.linkedin.com/in/maujood/">Mehdi Maujood</a> or <a href="https://www.linkedin.com/in/madiharaza88/">Madiha Raza</a>.</p>
-            
             </div>
         </div>
     </article>;

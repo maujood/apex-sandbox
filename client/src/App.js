@@ -102,7 +102,7 @@ class App extends Component {
           </div>
           <div class="slds-col slds-size_1-of-1 slds-align_absolute-center App-footer">
             <a href="/privacypolicy.html" target="_blank">Privacy Policy</a>
-        </div>
+          </div>
         </div>
       </UserProvider>
     );
