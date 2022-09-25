@@ -1,6 +1,10 @@
 const problemDomain = require('./domain/problemDomain');
 const auth = require('./auth');
 
+let strException = `Integer cputime = System.Limits.getCpuTime();
+throw new SuccessException('{"cpu":'+ cputime + '}');
+class SuccessException extends Exception {}`;
+
 let problemRunner = {
     exec(id, code, req) {
         let conn = auth.getConnection(req);
@@ -8,7 +12,7 @@ let problemRunner = {
         .then(details => {
             let promiseList = [];
             details.test_cases.forEach(testCase => {
-                let codeWithTests = code + '\n' + testCase;
+                let codeWithTests = code + '\n' + testCase +'\n' + strException;
                 console.log('About to execute: ' + codeWithTests);
                 promiseList.push(this.execSingle(conn, codeWithTests, testCase));
             });

@@ -1,7 +1,7 @@
 const db = require('../db');
 
 problemAttemptsDomain = {
-    logAttempt(userId, problemId, submittedCode, success) {
+    logAttempt(userId, problemId, submittedCode, success, ms) {
         return new Promise((resolve, reject) => {
             Promise.resolve().then(() => {
                 if (success) {
@@ -10,7 +10,7 @@ problemAttemptsDomain = {
                 else return true;
             })
             .then(() => {
-                return db.execWithParams('INSERT INTO public.problem_attempts(user_id, problem_id, submitted_code, success) VALUES($1, $2, $3, $4) RETURNING id', [userId, problemId, submittedCode, success]);
+                return db.execWithParams('INSERT INTO public.problem_attempts(user_id, problem_id, submitted_code, success, exec_ms) VALUES($1, $2, $3, $4, $5) RETURNING id', [userId, problemId, submittedCode, success, ms]);
             })
             .then((result) => {
                 resolve(result.rows[0]);

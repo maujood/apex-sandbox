@@ -134,8 +134,23 @@ else {
         problemRunner.exec(req.body.problemId, req.body.code, req)
         .then(execResult => {
             let success = false;
-            if (execResult.length > 0) success = execResult.every(_ => _.success);
-            problemAttemptsDomain.logAttempt(auth.getDbUserId(req), req.body.problemId, req.body.code, success)
+            let ms = 0;
+            if (execResult.length > 0) success = execResult.every(_ => _.exceptionMessage?.includes('SuccessException'));
+            if (success) {
+                execResult.forEach((item) => {
+                    let parsed = JSON.parse(item.exceptionMessage.substring(18));
+                    ms += parsed.cpu;
+                    item.success = true;
+                });
+            }
+            else {
+                execResult.forEach((item) => {
+                    if (item.exceptionMessage?.includes('SuccessException')) {
+                        item.success = true;
+                    }
+                });
+            }
+            problemAttemptsDomain.logAttempt(auth.getDbUserId(req), req.body.problemId, req.body.code, success, ms)
             .then((attemptRow) => {
                 res.json(execResult);
             });
