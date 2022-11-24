@@ -45,6 +45,19 @@ const Navigation = (props) => {
                             <span class="slds-assistive-text">Expand Tree Item</span>
                         </button>
                         <span class="slds-has-flexi-truncate">
+                            <a href="/the-team" class="slds-tree__item-label slds-truncate" title="Meet the Team">Meet the Team</a>
+                        </span>
+                    </div>
+                </li>
+                <li aria-level="1" role="treeitem">
+                    <div class="slds-tree__item">
+                        <button class="slds-button slds-button_icon slds-m-right_x-small slds-hidden" aria-hidden="true" tabindex="-1" title="Expand Tree Item">
+                            <svg class="slds-button__icon slds-button__icon_small" aria-hidden="true">
+                                <use href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Expand Tree Item</span>
+                        </button>
+                        <span class="slds-has-flexi-truncate">
                             <a href="/privacypolicy.html" target="_blank" class="slds-tree__item-label slds-truncate" title="Privacy Policy">Privacy Policy</a>
                         </span>
                     </div>

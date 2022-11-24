@@ -9,6 +9,26 @@ const Team = (props) => {
         </>;
     }
 
+    let girishBio = () => {
+        return <>
+            <p>I am a Software Engineer who loves to solve complex problems using code.</p>
+            <p>Although I have spent the past few years coding on the Salesforce platform, I have been consistently exploring other technologies to find what problems they solve. I get excited about finding solutions to common problems.</p>
+        </>;
+    }
+
+    let sahilBio = () => {
+        return <>
+            <p>I'm a Salesforce developer who loves solving problems using code. I started creating Apex practice problems on ApexSandbox.io so every Apex developer could improve their problem solving skills. I have also experience of creating awesome apps on top of Angular and I am currently at Concret.io.</p>
+            <p>I would be happy to <a href="https://www.linkedin.com/in/sahil-manglani-7279aa1aa/" target="_blank">connect on Linkedin</a> if you would like to network.</p>
+        </>;
+    }
+
+    let ankushBio = () => {
+        return <>
+            <p>I'm a driven and detail-oriented software engineer with professional experience in Salesforce, and I enjoy writing code.</p>
+        </>
+    }
+
     let genericBio = () => {
         return <>
             <p>This person hasn't put a bio on here yet, but can confirm they're awesome.</p>
@@ -53,7 +73,7 @@ const Team = (props) => {
                         url="https://www.linkedin.com/in/ankush-sarsewar/"
                         avatarUrl="/assets/images/avatar_ankush.jpg"
                         memberName="Ankush Sarsewar"
-                        bio={genericBio()}
+                        bio={ankushBio()}
                         />
 
                     <TeamMember 
@@ -67,14 +87,14 @@ const Team = (props) => {
                         url="https://www.linkedin.com/in/girish-shinde/"
                         avatarUrl="/assets/images/avatar_girish.jpg"
                         memberName="Girish Shinde"
-                        bio={genericBio()}
+                        bio={girishBio()}
                         />
                     
                     <TeamMember 
                         url="https://www.linkedin.com/in/sahil-manglani-7279aa1aa/"
                         avatarUrl="/assets/images/avatar_sahil.jpg"
                         memberName="Sahil Manglani"
-                        bio={genericBio()}
+                        bio={sahilBio()}
                         />
                     
                     <TeamMember 
