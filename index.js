@@ -63,6 +63,20 @@ else {
         });
     });
 
+    app.get('/api/easyPeasyProblems', function (req, res) {
+        problemDomain.getEasyPeasyProblems()
+        .then((easyPeasyProblems) => {
+            res.json(easyPeasyProblems);
+        });
+    });
+
+    app.get('/api/latestProblems', function (req, res) {
+        problemDomain.getLatestProblems()
+        .then((easyPeasyProblems) => {
+            res.json(easyPeasyProblems);
+        });
+    });
+
     app.get('/api/problem/view/:id', function(req, res) {
         problemDomain.getProblemDetails(req.params.id)
         .then((row) => {

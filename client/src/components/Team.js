@@ -40,6 +40,11 @@ const Team = (props) => {
             <div class="slds-card__header slds-grid">
                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
                     <div class="slds-media__body">
+                        <span class="slds-icon_container slds-icon_container_circle slds-icon-standard-account">
+                            <svg class="slds-icon" aria-hidden="true">
+                                <use href="/assets/icons/action-sprite/svg/symbols.svg#new_group"></use>
+                            </svg>
+                        </span>
                         <h2 class="slds-text-heading_large heading">Meet the Team</h2>
                     </div>
                 </header>

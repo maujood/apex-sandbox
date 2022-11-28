@@ -23,6 +23,20 @@ problemDomain = {
             });
     },
 
+    getEasyPeasyProblems() {
+        return db.exec('SELECT id, title FROM problems WHERE active = true AND category_id = 1 ORDER BY Ordinal LIMIT 10')
+            .then((result) => {
+                return result.rows;
+            });
+    },
+
+    getLatestProblems() {
+        return db.exec('SELECT id, title FROM problems WHERE active = true ORDER BY id DESC LIMIT 10')
+            .then((result) => {
+                return result.rows;
+            });
+    },
+
     getProblemDetails(problemId) {
         return db.execWithParams('SELECT p.id id, title, problem_statement, method, hints, test_cases, u.name, u.url ' + 
                 'FROM problems p left join users u on p.contributor_id = u.id ' + 

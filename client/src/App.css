@@ -57,6 +57,10 @@ p {
 .heading {
   font-size: 2.5rem;
   font-weight: 100;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  padding-left: 0.75rem;
 }
 
 .avatar_title {
