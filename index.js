@@ -72,8 +72,20 @@ else {
 
     app.get('/api/latestProblems', function (req, res) {
         problemDomain.getLatestProblems()
-        .then((easyPeasyProblems) => {
-            res.json(easyPeasyProblems);
+        .then((latestProblems) => {
+            res.json(latestProblems);
+        });
+    });
+
+    app.get('/api/unsolvedProblems', function (req, res) {
+        let dbUserId = auth.getDbUserId(req);
+        if (dbUserId == null) {
+            res.status(401).json({message: 'Unauthorized'});
+            return;
+        }
+        problemDomain.getUnsolvedProblems(dbUserId)
+        .then((unsolvedProblems) => {
+            res.json(unsolvedProblems);
         });
     });
 

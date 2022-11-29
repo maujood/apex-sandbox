@@ -20,16 +20,22 @@ const HomePage = (props) => {
     if (user.loggedIn) {
         homeProblemList = () => {
             return <div class="slds-grid slds-gutters slds-wrap">
-                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
                     <div class="slds-p-around_medium">
-                        <div class="slds-text-title_caps">Get Started with Beginner Problems</div>
+                        <div class="slds-text-heading_medium">Get Started with Beginner Problems</div>
                             <HomeEasyProblems />
                     </div>
                 </div>
-                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
                     <div class="slds-p-around_medium">
-                        <div class="slds-text-title_caps">Try Out the Latest Problems</div>
+                        <div class="slds-text-heading_medium">Try Out the Latest Problems</div>
                             <HomeLatestProblems />
+                    </div>
+                </div>
+                <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                    <div class="slds-p-around_medium">
+                        <div class="slds-text-heading_medium">Revisit Unsolved Problems</div>
+                            <HomeRecentProblems />
                     </div>
                 </div>
             </div>;

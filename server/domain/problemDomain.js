@@ -37,6 +37,21 @@ problemDomain = {
             });
     },
 
+    getUnsolvedProblems(userId) {
+        return db.execWithParams('SELECT id, title FROM ' +
+            '    (SELECT DISTINCT ON (p.id) p.id id, p.title title, p.active active, pa.id attempt_id ' +
+            '    FROM problem_attempts pa INNER JOIN problems p ON pa.problem_id = p.id ' +
+            '    WHERE pa.user_id = $1 ' +
+            '    ORDER BY p.id DESC) t ' +
+            'WHERE active = true AND id NOT IN ' +
+            '    (SELECT DISTINCT problem_id FROM problem_user_success WHERE user_id = $2) ' +
+            'ORDER BY attempt_id DESC LIMIT 10'
+        , [userId, userId])
+        .then((result) => {
+            return result.rows;
+        });
+    },
+
     getProblemDetails(problemId) {
         return db.execWithParams('SELECT p.id id, title, problem_statement, method, hints, test_cases, u.name, u.url ' + 
                 'FROM problems p left join users u on p.contributor_id = u.id ' + 

@@ -5,7 +5,7 @@ const HomeRecentProblems = (props) => {
     let problemList = [];
     const [state, setState] = useState([]);
     useEffect(() => {
-        fetch('/api/easyPeasyProblems')
+        fetch('/api/unsolvedProblems')
         .then(response => response.json())
         .then(res => {
             //problemList = res;
