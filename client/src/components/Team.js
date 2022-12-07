@@ -29,6 +29,13 @@ const Team = (props) => {
         </>
     }
 
+    let noorBio = () => {
+        return <>
+            <p>A software engineer with 10+ years of professional experience gained in tech stacks like C++, C#.NET, and Salesforce. I am passionate about solving problems, and performance optimization in Software Development. I have a fascination with system design.</p>
+            <p>I will be glad to connect with you on https://www.linkedin.com/in/noor-alam-shuvo/</p>
+        </>
+    }
+
     let genericBio = () => {
         return <>
             <p>This person hasn't put a bio on here yet, but can confirm they're awesome.</p>
@@ -85,7 +92,7 @@ const Team = (props) => {
                         url="https://www.linkedin.com/in/noor-alam-shuvo/"
                         avatarUrl="/assets/images/avatar_noor_alam.jpg"
                         memberName="Noor Alam Shuvo"
-                        bio={genericBio()}
+                        bio={noorBio()}
                         />
 
                     <TeamMember 
