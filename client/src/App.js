@@ -18,7 +18,8 @@ class App extends Component {
 
   contextData = {
     loggedIn: true,
-    username: ''
+    username: '',
+    instanceUrl: ''
   }
 
   // Fetch passwords after first mount
@@ -35,6 +36,7 @@ class App extends Component {
         result => {
           this.contextData.loggedIn = result.data.loggedIn;
           this.contextData.username = result.data.userDisplayName;
+          this.contextData.instanceUrl = result.data.instanceUrl;
           this.setState({ 
             loggedIn: result.data.loggedIn,
             username: result.data.userDisplayName
