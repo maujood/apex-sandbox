@@ -206,6 +206,7 @@ function ProblemUpsert(props) {
                                 <option value="4">Sets</option>
                                 <option value="5">Maps</option>
                                 <option value="6">Data Structures & Algorithms</option>
+                                <option value="8">Database 101</option>
                             </select>
                         </div>
                     </div>
