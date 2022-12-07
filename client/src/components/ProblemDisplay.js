@@ -11,7 +11,7 @@ const ProblemDisplay = (props) => {
     let problemInfo = () => {
         if (problem.info_identifier === 'data_model' && user.loggedIn) {
             let packageUrl = user.instanceUrl + '/packaging/installPackage.apexp?p0=04t5f000000Gx6CAAS';
-            return <div class="slds-text-color_weak slds-m-bottom_medium">
+            return <div class="slds-text-color_weak slds-m-bottom_medium slds-border_bottom">
                     <p>Note: This problem requires installation of a packaged data model. <a href={packageUrl} target="_blank" rel="noreferrer">Install package in your org</a> and <a href="https://gist.github.com/maujood/9bca1e95a9fe39b1cb881a116873d83e" target="_blank" rel="noreferrer">read up on the data model</a></p>
             </div>;
         }
