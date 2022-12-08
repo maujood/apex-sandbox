@@ -117,7 +117,7 @@ class App extends Component {
     if (this.state.loggedIn) {
       return (
         <ul className="slds-global-actions">
-          <li className="slds-global-actions__item">You are logged in as: {this.state.username}</li>
+          <li className="slds-global-actions__item">You are logged in as: <a target="_blank" rel="noreferrer" href={this.contextData.instanceUrl}>{this.state.username}</a></li>
           <li className="slds-global-actions__item"><button className="slds-button slds-button_neutral" onClick={this.logout}>Log out</button></li>
         </ul>);
     }
