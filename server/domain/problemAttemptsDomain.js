@@ -20,6 +20,16 @@ problemAttemptsDomain = {
                 reject(err);
             });
         });
+    },
+    getAttemptPercentiles() {
+        // 'select ' +
+        // percentile_disc(0.25) within group (order by t.score),
+        // percentile_disc(0.5) within group (order by t.score),
+        // percentile_disc(0.75) within group (order by t.score),
+        // percentile_disc(0.90) within group (order by t.score),
+        // percentile_disc(0.95) within group (order by t.score),
+        // percentile_disc(0.99) within group (order by t.score)
+        // from (SELECT user_id, count(*) score from problem_user_success group by user_id) t'
     }
 }
 
