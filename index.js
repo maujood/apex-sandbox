@@ -57,6 +57,13 @@ else {
         res.json({data: userInfo});
     });
 
+    app.get('/api/problemListAll', function (req, res) {
+      problemDomain.getProblemList(auth.getDbUserId(req))
+      .then((problems) => {
+          res.json(problems);
+      });
+    });
+
     app.get('/api/problemList', function (req, res) {
         problemDomain.getCategoriesWithProblems(auth.getDbUserId(req))
         .then((categoriesWithProblems) => {

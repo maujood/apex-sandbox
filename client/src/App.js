@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Problem from './components/Problem';
 import ProblemUpsert from './components/ProblemUpsert';
+import ProblemList from './components/ProblemList';
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import Team from './components/Team';
@@ -110,6 +111,8 @@ class App extends Component {
               <Route path="/problem/edit/:urlProblemId" element={<ProblemUpsert onlogout={this.setInfo} />}>
               </Route>
               <Route path="/problem/:problemId" element={<Problem onlogout={this.setInfo} onpointschanged={this.updatePoints} />}>
+              </Route>
+              <Route path="/problem-list" element={<ProblemList />}>
               </Route>
               <Route
                 path="*"
