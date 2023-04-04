@@ -30,7 +30,7 @@ let auth = {
 
         return conn;
     },
-    getUserInfo(req) {
+    async getUserInfo(req) {
         let authInfo = req.session.authInfo;
         let userInfo = req.session.userInfo;
         let info = {
@@ -42,6 +42,16 @@ let auth = {
         console.log('User Info: ' + JSON.stringify(userInfo));
 
         if (authInfo != null && userInfo != null) {
+
+            // patch for users logged in, but score not stored in session
+            if (userInfo.points == null) {
+                let userRecord = await userDomain.createOrGetUserRecord(userInfo.username, userInfo.userEmail);
+                let percentileRank = await userDomain.getPercentileValueForPoints(userRecord.points);
+                userInfo.points = userRecord.points;
+                userInfo.rank = percentileRank;
+                req.session.userInfo = userInfo;
+            }
+
             info.loggedIn = true;
             info.username = authInfo.username;
             info.userDisplayName = userInfo.userDisplayName;

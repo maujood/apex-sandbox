@@ -52,8 +52,9 @@ else {
       
     app.use(session(sess));
     
-    app.get('/api/info', function (req, res) {
-        res.json({data: auth.getUserInfo(req)});
+    app.get('/api/info', async function (req, res) {
+        let userInfo = await auth.getUserInfo(req);
+        res.json({data: userInfo});
     });
 
     app.get('/api/problemList', function (req, res) {
