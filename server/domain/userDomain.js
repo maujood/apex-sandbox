@@ -52,7 +52,7 @@ userDomain = {
                 for (let i=1; i<=99; i++) {
                     percentiles.push(result.rows[0][`p${i}`]);
                 }
-                cache.set('percentiles', percentiles, 1000 * 60);
+                cache.set('percentiles', percentiles, 1000 * 60 * 60);
                 resolve(percentiles);
             });
         });
