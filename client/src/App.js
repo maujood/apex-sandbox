@@ -140,7 +140,7 @@ class App extends Component {
                   </svg>
                 </span>
               </span>
-              {this.state.points} points
+              {this.state.points.toLocaleString()} points
             </span>
             <span class="slds-badge">
               <span class="slds-badge__icon slds-badge__icon_left">
