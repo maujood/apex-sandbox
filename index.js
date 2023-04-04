@@ -156,9 +156,7 @@ else {
     })
 
     app.post('/api/executeApex', function (req, res) {
-        console.log('Body: ' + req.body.code);
-        console.log('Problem ID: ' + req.body.problemId);
-        problemRunner.exec(req.body.problemId, req.body.code, req)
+        execResult = problemRunner.exec(req.body.problemId, req.body.code, req)
         .then(execResult => {
             let success = false;
             let ms = 0;
@@ -186,9 +184,15 @@ else {
                 }
                 if (attemptDeets.newPoints !== null) {
                     executeResponse.pointsUpdated = true;
-                    executeResponse.userInfo = auth.getUserInfo(req);
+                    auth.getUserInfo(req)
+                    .then((userInfo) => {
+                        executeResponse.userInfo = userInfo;
+                        res.json(executeResponse);
+                    });
                 }
-                res.json(executeResponse);
+                else {
+                    res.json(executeResponse);
+                }
             });
         })
         .catch(err => {

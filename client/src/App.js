@@ -131,7 +131,7 @@ class App extends Component {
       return (
         <ul className="slds-global-actions">
           <li className="slds-global-actions__item">You are logged in as: <a target="_blank" rel="noreferrer" href={this.contextData.instanceUrl}>{this.state.username}</a></li>
-          <li className="slds-global-actions__item" style={{display: 'none'}}>
+          <li className="slds-global-actions__item">
             <span class="slds-badge">
               <span class="slds-badge__icon slds-badge__icon_left">
                 <span class="slds-icon_container slds-icon-utility-moneybag slds-current-color">
