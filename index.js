@@ -63,7 +63,7 @@ else {
         });
     });
 
-    app.get('/api/easyPeasyProblems', function (req, res) {
+    app.get('/api/easyPeasyProblems', async function (req, res) {
         problemDomain.getEasyPeasyProblems()
         .then((easyPeasyProblems) => {
             res.json(easyPeasyProblems);
@@ -176,9 +176,18 @@ else {
                     }
                 });
             }
-            problemAttemptsDomain.logAttempt(auth.getDbUserId(req), req.body.problemId, req.body.code, success, ms)
-            .then((attemptRow) => {
-                res.json(execResult);
+            problemAttemptsDomain.logAttempt(req, auth.getDbUserId(req), req.body.problemId, req.body.code, success, ms)
+            .then((attemptDeets) => {
+                let executeResponse = {
+                    pointsUpdated: false,
+                    execResult: execResult,
+                    userInfo: {}
+                }
+                if (attemptDeets.newPoints !== null) {
+                    executeResponse.pointsUpdated = true;
+                    executeResponse.userInfo = auth.getUserInfo(req);
+                }
+                res.json(executeResponse);
             });
         })
         .catch(err => {

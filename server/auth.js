@@ -45,6 +45,8 @@ let auth = {
             info.loggedIn = true;
             info.username = authInfo.username;
             info.userDisplayName = userInfo.userDisplayName;
+            info.points = userInfo.points;
+            info.rank = userInfo.rank;
             info.instanceUrl = authInfo.instanceUrl;
         }
 
@@ -90,8 +92,15 @@ let auth = {
                             dbId: userRecord.id,
                             username: idResponse.username,
                             userDisplayName: idResponse.display_name,
-                            userEmail: idResponse.email
-                        };
+                            userEmail: idResponse.email,
+                            points: userRecord.points
+                        }
+                        return userDomain.getPercentileValueForPoints(userRecord.points);
+                    })
+                    .then((percentileRank) => {
+                        let userInfo = req.session.userInfo;
+                        userInfo.rank = percentileRank;
+                        req.session.userInfo = userInfo;
                         resolve(path);
                     });
                 });
@@ -100,6 +109,13 @@ let auth = {
                 reject(err);
             })
         });
+    },
+    async updateUserPointsInSession(req, points) {
+        let userInfo = req.session.userInfo;
+        let percentileRank = await userDomain.getPercentileValueForPoints(points);
+        userInfo.rank = percentileRank;
+        userInfo.points = points;
+        req.session.userInfo = userInfo;
     },
     logout(req) {
         console.log('Destroying session with Session ID: ' + req.sessionID);
