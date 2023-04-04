@@ -6,7 +6,7 @@ function Problem(props) {
     const { problemId } = useParams();
     
     return (
-        <ApexRunner problemId={problemId} onlogout={props.onlogout} />
+        <ApexRunner problemId={problemId} onlogout={props.onlogout} onpointschanged={props.onpointschanged} />
     );
   }
 
