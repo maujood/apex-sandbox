@@ -2,43 +2,35 @@ const db = require('../db');
 
 problemDomain = {
     //returns array of strings
-    getCategories() {
-            return db.exec('SELECT title category FROM problem_categories')
-            .then((result) => {
-                return result.rows;
-            });
+    async getCategories() {
+        let result = await db.exec('SELECT title category FROM problem_categories');
+        return result.rows;
     },
 
-    getProblemList(userId) {
-        return db.execWithParams('SELECT p.id id, p.title title, c.title category, COALESCE(s.success, 0) success ' +
+    async getProblemList(userId) {
+        let result = await db.execWithParams('SELECT p.id id, p.title title, c.title category, COALESCE(s.success, 0) success ' +
             'FROM public.problems p ' +
             '    LEFT JOIN (SELECT 1 success, problem_id from public.problem_user_success where user_id = $1) s ON ' + 
    	        '        s.problem_id = p.id ' + 
             '    INNER JOIN public.problem_categories c ON ' +
             '        p.category_id = c.id ' +
             'WHERE active = true ' +
-            'ORDER BY c.ordinal, p.ordinal', [userId])
-            .then((result) => {
-                return result.rows;
-            });
+            'ORDER BY c.ordinal, p.ordinal', [userId]);
+        return result.rows;
     },
 
-    getEasyPeasyProblems() {
-        return db.exec('SELECT id, title FROM problems WHERE active = true AND category_id = 1 ORDER BY Ordinal LIMIT 10')
-            .then((result) => {
-                return result.rows;
-            });
+    async getEasyPeasyProblems() {
+        let result = await db.exec('SELECT id, title FROM problems WHERE active = true AND category_id = 1 ORDER BY Ordinal LIMIT 10');
+        return result.rows;
     },
 
-    getLatestProblems() {
-        return db.exec('SELECT id, title FROM problems WHERE active = true ORDER BY id DESC LIMIT 10')
-            .then((result) => {
-                return result.rows;
-            });
+    async getLatestProblems() {
+        let result = await db.exec('SELECT id, title FROM problems WHERE active = true ORDER BY id DESC LIMIT 10');
+        return result.rows;
     },
 
-    getUnsolvedProblems(userId) {
-        return db.execWithParams('SELECT id, title FROM ' +
+    async getUnsolvedProblems(userId) {
+        let result = await db.execWithParams('SELECT id, title FROM ' +
             '    (SELECT DISTINCT ON (p.id) p.id id, p.title title, p.active active, pa.id attempt_id ' +
             '    FROM problem_attempts pa INNER JOIN problems p ON pa.problem_id = p.id ' +
             '    WHERE pa.user_id = $1 ' +
@@ -46,21 +38,17 @@ problemDomain = {
             'WHERE active = true AND id NOT IN ' +
             '    (SELECT DISTINCT problem_id FROM problem_user_success WHERE user_id = $2) ' +
             'ORDER BY attempt_id DESC LIMIT 10'
-        , [userId, userId])
-        .then((result) => {
-            return result.rows;
-        });
+        , [userId, userId]);
+        return result.rows;
     },
 
-    getProblemDetails(problemId) {
-        return db.execWithParams('SELECT p.id id, p.title title, problem_statement, c.info_identifier info_identifier, p.category_id category_id, method, hints, test_cases, u.name, u.url ' + 
+    async getProblemDetails(problemId) {
+        let result = await db.execWithParams('SELECT p.id id, p.title title, problem_statement, c.info_identifier info_identifier, p.category_id category_id, method, hints, test_cases, u.name, u.url ' + 
                 'FROM problems p left join users u on p.contributor_id = u.id ' + 
                 '  left join problem_categories c on p.category_id = c.id ' +
                 'WHERE p.id = $1'
-            , [problemId])
-            .then((result) => {
-                return result.rows[0];
-            });
+            , [problemId]);
+        return result.rows[0];
     },
 
     createProblem(problemJson, userId) {
@@ -97,26 +85,24 @@ problemDomain = {
         ]);
     },
 
-    getCategoriesWithProblems(userId) {
-        return this.getProblemList(userId)
-            .then(function (problems) {
-                let categoryList = [];
-                let categoryObj = {category: ''};
-                for (let i=0; i<problems.length; i++) {
-                    let p = problems[i];
-                    if (p.category !== categoryObj.category) {
-                        //a new category is starting. Create a new category object.
-                        categoryObj = {
-                            category: p.category,
-                            problems: []
-                        }
-                        categoryList.push(categoryObj);
-                    }
-                    categoryObj.problems.push(p);
+    async getCategoriesWithProblems(userId) {
+        let problems = await this.getProblemList(userId);
+        let categoryList = [];
+        let categoryObj = {category: ''};
+        for (let i=0; i<problems.length; i++) {
+            let p = problems[i];
+            if (p.category !== categoryObj.category) {
+                //a new category is starting. Create a new category object.
+                categoryObj = {
+                    category: p.category,
+                    problems: []
                 }
+                categoryList.push(categoryObj);
+            }
+            categoryObj.problems.push(p);
+        }
 
-                return categoryList;
-            });
+        return categoryList;
     }
 }
 

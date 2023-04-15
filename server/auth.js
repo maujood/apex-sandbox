@@ -30,7 +30,7 @@ let auth = {
 
         return conn;
     },
-    getUserInfo(req) {
+    async getUserInfo(req) {
         let authInfo = req.session.authInfo;
         let userInfo = req.session.userInfo;
         let info = {
@@ -42,9 +42,21 @@ let auth = {
         console.log('User Info: ' + JSON.stringify(userInfo));
 
         if (authInfo != null && userInfo != null) {
+
+            // patch for users logged in, but score not stored in session
+            if (userInfo.points == null) {
+                let userRecord = await userDomain.createOrGetUserRecord(userInfo.username, userInfo.userEmail);
+                let percentileRank = await userDomain.getPercentileValueForPoints(userRecord.points);
+                userInfo.points = userRecord.points;
+                userInfo.rank = percentileRank;
+                req.session.userInfo = userInfo;
+            }
+
             info.loggedIn = true;
             info.username = authInfo.username;
             info.userDisplayName = userInfo.userDisplayName;
+            info.points = userInfo.points;
+            info.rank = userInfo.rank;
             info.instanceUrl = authInfo.instanceUrl;
         }
 
@@ -90,8 +102,15 @@ let auth = {
                             dbId: userRecord.id,
                             username: idResponse.username,
                             userDisplayName: idResponse.display_name,
-                            userEmail: idResponse.email
-                        };
+                            userEmail: idResponse.email,
+                            points: userRecord.points
+                        }
+                        return userDomain.getPercentileValueForPoints(userRecord.points);
+                    })
+                    .then((percentileRank) => {
+                        let userInfo = req.session.userInfo;
+                        userInfo.rank = percentileRank;
+                        req.session.userInfo = userInfo;
                         resolve(path);
                     });
                 });
@@ -100,6 +119,13 @@ let auth = {
                 reject(err);
             })
         });
+    },
+    async updateUserPointsInSession(req, points) {
+        let userInfo = req.session.userInfo;
+        let percentileRank = await userDomain.getPercentileValueForPoints(points);
+        userInfo.rank = percentileRank;
+        userInfo.points = points;
+        req.session.userInfo = userInfo;
     },
     logout(req) {
         console.log('Destroying session with Session ID: ' + req.sessionID);

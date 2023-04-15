@@ -106,9 +106,12 @@ class ApexRunner extends React.Component {
         })
         .then(result => {
             this.setState({ 
-                execResults: JSON.stringify(result),
+                execResults: JSON.stringify(result.execResult),
                 executeInProgress: false
             });
+            if (result.pointsUpdated) {
+                this.props.onpointschanged(result.userInfo.points, result.userInfo.rank);
+            }
         })
         .catch(err => {
             this.setState({

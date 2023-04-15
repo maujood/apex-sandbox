@@ -52,8 +52,9 @@ else {
       
     app.use(session(sess));
     
-    app.get('/api/info', function (req, res) {
-        res.json({data: auth.getUserInfo(req)});
+    app.get('/api/info', async function (req, res) {
+        let userInfo = await auth.getUserInfo(req);
+        res.json({data: userInfo});
     });
 
     app.get('/api/problemListAll', function (req, res) {
@@ -70,7 +71,7 @@ else {
         });
     });
 
-    app.get('/api/easyPeasyProblems', function (req, res) {
+    app.get('/api/easyPeasyProblems', async function (req, res) {
         problemDomain.getEasyPeasyProblems()
         .then((easyPeasyProblems) => {
             res.json(easyPeasyProblems);
@@ -162,9 +163,7 @@ else {
     })
 
     app.post('/api/executeApex', function (req, res) {
-        console.log('Body: ' + req.body.code);
-        console.log('Problem ID: ' + req.body.problemId);
-        problemRunner.exec(req.body.problemId, req.body.code, req)
+        execResult = problemRunner.exec(req.body.problemId, req.body.code, req)
         .then(execResult => {
             let success = false;
             let ms = 0;
@@ -183,9 +182,24 @@ else {
                     }
                 });
             }
-            problemAttemptsDomain.logAttempt(auth.getDbUserId(req), req.body.problemId, req.body.code, success, ms)
-            .then((attemptRow) => {
-                res.json(execResult);
+            problemAttemptsDomain.logAttempt(req, auth.getDbUserId(req), req.body.problemId, req.body.code, success, ms)
+            .then((attemptDeets) => {
+                let executeResponse = {
+                    pointsUpdated: false,
+                    execResult: execResult,
+                    userInfo: {}
+                }
+                if (attemptDeets.newPoints !== null) {
+                    executeResponse.pointsUpdated = true;
+                    auth.getUserInfo(req)
+                    .then((userInfo) => {
+                        executeResponse.userInfo = userInfo;
+                        res.json(executeResponse);
+                    });
+                }
+                else {
+                    res.json(executeResponse);
+                }
             });
         })
         .catch(err => {

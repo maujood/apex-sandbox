@@ -14,13 +14,17 @@ class App extends Component {
   state = { 
     loggedIn: false,
     username: '',
-    userId: ''
+    userId: '',
+    points: 0,
+    rank: 0
   };
 
   contextData = {
-    loggedIn: true,
+    loggedIn: false,
     username: '',
-    instanceUrl: ''
+    instanceUrl: '',
+    points: 0,
+    rank: 0
   }
 
   // Fetch passwords after first mount
@@ -40,10 +44,19 @@ class App extends Component {
           this.contextData.instanceUrl = result.data.instanceUrl;
           this.setState({ 
             loggedIn: result.data.loggedIn,
-            username: result.data.userDisplayName
+            username: result.data.userDisplayName,
+            points: result.data.points,
+            rank: result.data.rank
           });
         }
       );
+  }
+
+  updatePoints = (points, rank) => {
+    this.setState({
+      points: points,
+      rank: rank
+    });
   }
 
   login() {
@@ -97,7 +110,7 @@ class App extends Component {
               </Route>
               <Route path="/problem/edit/:urlProblemId" element={<ProblemUpsert onlogout={this.setInfo} />}>
               </Route>
-              <Route path="/problem/:problemId" element={<Problem onlogout={this.setInfo} />}>
+              <Route path="/problem/:problemId" element={<Problem onlogout={this.setInfo} onpointschanged={this.updatePoints} />}>
               </Route>
               <Route path="/problem-list" element={<ProblemList />}>
               </Route>
@@ -121,6 +134,28 @@ class App extends Component {
       return (
         <ul className="slds-global-actions">
           <li className="slds-global-actions__item">You are logged in as: <a target="_blank" rel="noreferrer" href={this.contextData.instanceUrl}>{this.state.username}</a></li>
+          <li className="slds-global-actions__item">
+            <span class="slds-badge">
+              <span class="slds-badge__icon slds-badge__icon_left">
+                <span class="slds-icon_container slds-icon-utility-moneybag slds-current-color">
+                  <svg class="slds-icon slds-icon_xx-small" aria-hidden="true">
+                    <use href="/assets/icons/utility-sprite/svg/symbols.svg#moneybag"></use>
+                  </svg>
+                </span>
+              </span>
+              {this.state.points.toLocaleString()} points
+            </span>
+            <span class="slds-badge">
+              <span class="slds-badge__icon slds-badge__icon_left">
+                <span class="slds-icon_container slds-icon-utility-trending slds-current-color">
+                  <svg class="slds-icon slds-icon_xx-small" aria-hidden="true">
+                    <use href="/assets/icons/utility-sprite/svg/symbols.svg#trending"></use>
+                  </svg>
+                </span>
+              </span>
+              Top {this.state.rank}%
+            </span>
+          </li>
           <li className="slds-global-actions__item"><button className="slds-button slds-button_neutral" onClick={this.logout}>Log out</button></li>
         </ul>);
     }
