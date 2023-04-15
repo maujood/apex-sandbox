@@ -9,7 +9,6 @@ const ProblemList = (props) => {
   const [state, setState] = useState([]);
 
   const [categorySelected, setCategory] = React.useState(0);
-
   const handleCategoryChanged = (e) => {
     setCategory(Number(e.target.value));
   };
@@ -31,7 +30,8 @@ const ProblemList = (props) => {
 
   if (state.problemListStr) {
     problemList = JSON.parse(state.problemListStr);
-    console.log("Problem List", problemList);
+
+    // Filter the problem list based on table filters
     filteredProblems = problemList;
     if (categorySelected !== 0) {
       filteredProblems = problemList.filter((problem) => problem.category_id === categorySelected);
@@ -49,13 +49,13 @@ const ProblemList = (props) => {
     if (successCount && successCount > 0) {
       return (
         <span
-          class="slds-icon_container slds-icon-utility-check slds-current-color"
+          className="slds-icon_container slds-icon-utility-check slds-current-color"
           title="Success"
         >
-          <svg class="slds-icon slds-icon_xx-small" aria-hidden="true">
+          <svg className="slds-icon slds-icon_xx-small" aria-hidden="true">
             <use href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
           </svg>
-          <span class="slds-assistive-text">Success</span>
+          <span className="slds-assistive-text">Success</span>
         </span>
       );
     } else {
@@ -65,32 +65,38 @@ const ProblemList = (props) => {
 
   return (
     <>
-      <article class="slds-m-around_x-large">
-        <div class="slds-card left-border">
-          <div class="slds-card__header slds-grid slds-m-bottom_x-large">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-              <div class="slds-media__body">
-                <span class="slds-icon_container slds-icon_container_circle slds-icon-standard-account">
-                  <svg class="slds-icon" aria-hidden="true">
+      <article className="slds-m-around_x-large">
+        <div className="slds-card left-border">
+          {
+            // Header
+          }
+          <div className="slds-card__header slds-grid slds-m-bottom_x-large">
+            <header className="slds-media slds-media_center slds-has-flexi-truncate">
+              <div className="slds-media__body">
+                <span className="slds-icon_container slds-icon_container_circle slds-icon-standard-account">
+                  <svg className="slds-icon" aria-hidden="true">
                     <use href="/assets/icons/action-sprite/svg/symbols.svg#apex"></use>
                   </svg>
                 </span>
-                <h2 class="slds-text-heading_large heading">Problem List</h2>
+                <h2 className="slds-text-heading_large heading">Problem List</h2>
               </div>
             </header>
           </div>
-          <div class="slds-card__body slds-card__body_inner slds-wrap">
+          {
+            // Body
+          }
+          <div className="slds-card__body slds-card__body_inner slds-wrap">
             {
               // Filters
             }
-            <div class="slds-m-vertical_small">
+            <div className="slds-m-vertical_small">
               <div className="slds-grid slds-gutters slds-grid_align-end">
                 {
                   // Category Filter
                 }
                 <div className="slds-col slds-size_1-of-5">
                   <div className="slds-form-element">
-                    <label className="slds-form-element__label" for="select-01">
+                    <label className="slds-form-element__label" htmlFor="category_input">
                       Category
                     </label>
                     <div className="slds-form-element__control">
@@ -121,7 +127,7 @@ const ProblemList = (props) => {
 
                 <div className="slds-col slds-size_1-of-5">
                   <div className="slds-form-element">
-                    <label className="slds-form-element__label" for="select-01">
+                    <label className="slds-form-element__label" htmlFor="problemsToShow_input">
                       Completed
                     </label>
                     <div className="slds-form-element__control">
@@ -147,23 +153,23 @@ const ProblemList = (props) => {
                 Table
               */}
             <table
-              class="slds-table slds-table_cell-buffer slds-table_bordered"
-              aria-label="Example default base table of Opportunities"
+              className="slds-table slds-table_cell-buffer slds-table_bordered"
+              aria-label="Table of Problems"
             >
               <thead>
-                <tr class="slds-line-height_reset">
-                  <th class="" scope="col">
-                    <div class="slds-truncate" title="Title">
+                <tr className="slds-line-height_reset">
+                  <th className="" scope="col">
+                    <div className="slds-truncate" title="Title">
                       Title
                     </div>
                   </th>
-                  <th class="" scope="col">
-                    <div class="slds-truncate" title="Category">
+                  <th className="" scope="col">
+                    <div className="slds-truncate" title="Category">
                       Category
                     </div>
                   </th>
-                  <th class="" scope="col">
-                    <div class="slds-truncate" title="Completed">
+                  <th className="" scope="col">
+                    <div className="slds-truncate" title="Completed">
                       Completed
                     </div>
                   </th>
