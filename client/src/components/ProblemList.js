@@ -14,6 +14,11 @@ const ProblemList = (props) => {
     setCategory(Number(e.target.value));
   };
 
+  const [problemsToShow, setProblemsToShow] = React.useState("All");
+  const handleProblemsToShowChanged = (e) => {
+    setProblemsToShow(e.target.value);
+  };
+
   useEffect(() => {
     fetch("/api/problemListAll")
       .then((response) => response.json())
@@ -26,7 +31,18 @@ const ProblemList = (props) => {
 
   if (state.problemListStr) {
     problemList = JSON.parse(state.problemListStr);
+    console.log("Problem List", problemList);
     filteredProblems = problemList;
+    if (categorySelected !== 0) {
+      filteredProblems = problemList.filter((problem) => problem.category_id === categorySelected);
+    }
+    if (problemsToShow !== "All") {
+      if (problemsToShow === "Solved") {
+        filteredProblems = filteredProblems.filter((problem) => +problem.success !== 0);
+      } else {
+        filteredProblems = filteredProblems.filter((problem) => +problem.success === 0);
+      }
+    }
   }
 
   let solvedProblem = (successCount) => {
@@ -34,12 +50,12 @@ const ProblemList = (props) => {
       return (
         <span
           class="slds-icon_container slds-icon-utility-check slds-current-color"
-          title="Description of icon when needed"
+          title="Success"
         >
           <svg class="slds-icon slds-icon_xx-small" aria-hidden="true">
             <use href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
           </svg>
-          <span class="slds-assistive-text">Description of icon when needed</span>
+          <span class="slds-assistive-text">Success</span>
         </span>
       );
     } else {
@@ -51,7 +67,7 @@ const ProblemList = (props) => {
     <>
       <article class="slds-m-around_x-large">
         <div class="slds-card left-border">
-          <div class="slds-card__header slds-grid">
+          <div class="slds-card__header slds-grid slds-m-bottom_x-large">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
               <div class="slds-media__body">
                 <span class="slds-icon_container slds-icon_container_circle slds-icon-standard-account">
@@ -64,6 +80,72 @@ const ProblemList = (props) => {
             </header>
           </div>
           <div class="slds-card__body slds-card__body_inner slds-wrap">
+            {
+              // Filters
+            }
+            <div class="slds-m-vertical_small">
+              <div className="slds-grid slds-gutters slds-grid_align-end">
+                {
+                  // Category Filter
+                }
+                <div className="slds-col slds-size_1-of-5">
+                  <div className="slds-form-element">
+                    <label className="slds-form-element__label" for="select-01">
+                      Category
+                    </label>
+                    <div className="slds-form-element__control">
+                      <div className="slds-select_container">
+                        <select
+                          className="slds-select"
+                          id="category_input"
+                          value={categorySelected}
+                          onChange={handleCategoryChanged}
+                        >
+                          <option value="0">All</option>
+                          <option value="1">Apex 101</option>
+                          <option value="7">Apex Language Features</option>
+                          <option value="3">SObjects</option>
+                          <option value="2">Lists</option>
+                          <option value="4">Sets</option>
+                          <option value="5">Maps</option>
+                          <option value="6">Data Structures & Algorithms</option>
+                          <option value="8">Database 101</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {
+                  // Solved Filter
+                }
+
+                <div className="slds-col slds-size_1-of-5">
+                  <div className="slds-form-element">
+                    <label className="slds-form-element__label" for="select-01">
+                      Completed
+                    </label>
+                    <div className="slds-form-element__control">
+                      <div className="slds-select_container">
+                        <select
+                          className="slds-select"
+                          id="problemsToShow_input"
+                          value={problemsToShow}
+                          onChange={handleProblemsToShowChanged}
+                        >
+                          <option value="All">All</option>
+                          <option value="Unsolved">Unsolved</option>
+                          <option value="Solved">Solved</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/*
+                Table
+              */}
             <table
               class="slds-table slds-table_cell-buffer slds-table_bordered"
               aria-label="Example default base table of Opportunities"
