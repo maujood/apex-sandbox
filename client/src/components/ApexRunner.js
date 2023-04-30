@@ -10,6 +10,7 @@ class ApexRunner extends React.Component {
         code: '',
         problemTitle: '',
         problemDescription: '',
+        problemPoints: 0,
         problem: '{}',
         authorName: '',
         authorUrl: '',
@@ -58,6 +59,7 @@ class ApexRunner extends React.Component {
                 code: localCode ? localCode : result.method,
                 problemTitle: result.title,
                 problemDescription: result.problem_statement,
+                problemPoints: result.points,
                 authorName: result.name,
                 authorUrl: result.url,
                 problem: resultStr
@@ -149,9 +151,10 @@ class ApexRunner extends React.Component {
                             </span>
                         </div>
                         <div class="slds-media__body">
-                            <h2 class="slds-card__header-title">
+                            <h2 class="slds-card__header-title display-inline">
                                 <span>#{this.props.problemId} - {this.state.problemTitle}</span>
                             </h2>
+                            <span class="slds-badge slds-m-left_x-small">{this.state.problemPoints} points</span>
                         </div>
                         <div class="slds-no-flex">
                             <ContributorInfo authorName={this.state.authorName} authorUrl={this.state.authorUrl} />

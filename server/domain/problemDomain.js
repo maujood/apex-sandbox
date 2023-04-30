@@ -43,7 +43,7 @@ problemDomain = {
     },
 
     async getProblemDetails(problemId) {
-        let result = await db.execWithParams('SELECT p.id id, p.title title, problem_statement, c.info_identifier info_identifier, p.category_id category_id, method, hints, test_cases, u.name, u.url ' + 
+        let result = await db.execWithParams('SELECT p.id id, p.title title, problem_statement, p.points points, c.info_identifier info_identifier, p.category_id category_id, method, hints, test_cases, u.name, u.url ' + 
                 'FROM problems p left join users u on p.contributor_id = u.id ' + 
                 '  left join problem_categories c on p.category_id = c.id ' +
                 'WHERE p.id = $1'

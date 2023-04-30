@@ -80,3 +80,7 @@ code {
   background-color: #eee;
   border-radius: 6px;
 }
+
+.display-inline {
+  display: inline;
+}
