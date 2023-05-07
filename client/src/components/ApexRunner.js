@@ -154,7 +154,7 @@ class ApexRunner extends React.Component {
                             <h2 class="slds-card__header-title display-inline">
                                 <span>#{this.props.problemId} - {this.state.problemTitle}</span>
                             </h2>
-                            <span class="slds-badge slds-m-left_x-small">{this.state.problemPoints} points</span>
+                            <span class="slds-badge slds-m-left_x-small">+{this.state.problemPoints} points</span>
                         </div>
                         <div class="slds-no-flex">
                             <ContributorInfo authorName={this.state.authorName} authorUrl={this.state.authorUrl} />
