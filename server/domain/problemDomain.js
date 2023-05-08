@@ -8,7 +8,7 @@ problemDomain = {
     },
 
     async getProblemList(userId) {
-        let result = await db.execWithParams('SELECT p.id id, p.title title, c.title category, COALESCE(s.success, 0) success ' +
+        let result = await db.execWithParams('SELECT p.id id, p.title title, c.title category, p.category_id category_id, COALESCE(s.success, 0) success ' +
             'FROM public.problems p ' +
             '    LEFT JOIN (SELECT 1 success, problem_id from public.problem_user_success where user_id = $1) s ON ' + 
    	        '        s.problem_id = p.id ' + 

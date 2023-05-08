@@ -177,8 +177,8 @@ const ProblemList = (props) => {
               </thead>
               <tbody>
                 {filteredProblems.map((problem) => (
-                  <tr key={problem.id} onClick={() => navigate("/Problem/" + problem.id)}>
-                    <td>{problem.title}</td>
+                  <tr key={problem.id}>
+                    <td><a href={"/problem/" + problem.id}>{problem.title}</a></td>
                     <td>{problem.category}</td>
                     <td>{solvedProblem(problem.success)}</td>
                   </tr>
