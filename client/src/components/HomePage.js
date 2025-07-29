@@ -15,7 +15,7 @@ const HomePage = (props) => {
             <div class="slds-p-vertical_x-large slds-align_absolute-center">
                 <LoginButton bigbutton />
             </div>
-            <p class="slds-text-heading_small slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong> I'm putting together <a href="https://www.codesteps.dev">CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
+            <p class="slds-text-heading_medium slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong> I'm putting together <a href="https://www.codesteps.dev">CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
         </>;
     }
     if (user.loggedIn) {
