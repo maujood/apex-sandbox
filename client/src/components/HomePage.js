@@ -4,6 +4,7 @@ import LoginButton from './LoginButton';
 import HomeEasyProblems from './HomeEasyProblems';
 import HomeRecentProblems from './HomeRecentProblems';
 import HomeLatestProblems from './HomeLatestProblems';
+import CodeStepsLink from './CodeStepsLink';
 
 const HomePage = (props) => {
     const user = useContext(UserContext);
@@ -15,14 +16,14 @@ const HomePage = (props) => {
             <div class="slds-p-vertical_x-large slds-align_absolute-center">
                 <LoginButton bigbutton />
             </div>
-            <p class="slds-text-heading_medium slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong> I'm putting together <a href="https://www.codesteps.dev">CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
+            <CodeStepsLink />
         </>;
     }
     if (user.loggedIn) {
         homeProblemList = () => {
             return <div class="slds-grid slds-gutters slds-wrap">
                 <div class="slds-col slds-size_1-of-1">
-                <p class="slds-text-heading_medium slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong> I'm putting together <a href="https://www.codesteps.dev">CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
+                    <CodeStepsLink />
                 </div>
                 <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
                     <div class="slds-p-around_medium">

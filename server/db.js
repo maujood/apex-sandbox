@@ -6,7 +6,7 @@ let db = {
     setPool(dbUrl) {
         pool = new Pool({
             connectionString: dbUrl,
-            ssl: {
+            ssl: process.env.ENV_NAME === 'development' ? false : {
                 rejectUnauthorized: false
             }
         });
