@@ -15,6 +15,7 @@ const HomePage = (props) => {
             <div class="slds-p-vertical_x-large slds-align_absolute-center">
                 <LoginButton bigbutton />
             </div>
+            <p class="slds-text-heading_small slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong> I'm putting together <a href="https://www.codesteps.dev">CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
         </>;
     }
     if (user.loggedIn) {
@@ -61,7 +62,6 @@ const HomePage = (props) => {
                 <p class="slds-text-heading_small slds-p-top_medium"><strong>Join the conversation</strong> on the <a href="https://trailhead.salesforce.com/trailblazer-community/groups/0F94S000000kJb2SAE" target="_blank" rel="noreferrer">ApexSandbox.io Trailblazer Community Group</a>. Get help, ask questions, and discuss solutions to problems.</p>
                 <p class="slds-text-heading_small slds-p-top_medium"><strong>Showcase your solutions on GitHub!</strong> Check out the <a href="https://chrome.google.com/webstore/detail/apexsync/fnhpgladlghhekaggcolmidhinhckheh" target="_blank">ApexSync Chrome Extension</a> by <a href="https://www.linkedin.com/in/ankush-sarsewar/" target="_blank">Ankush Sarsewar</a> that lets you sync your ApexSandbox.io solutions to a GitHub repo in just one click!</p>
                 <p class="slds-text-heading_small slds-p-top_medium"><strong>Have feedback? Wish to contribute? Just want to network?</strong> Reach out to the founders <a href="https://www.linkedin.com/in/maujood/">Mehdi Maujood</a> and <a href="https://www.linkedin.com/in/madiharaza88/">Madiha Raza</a>, or <a href="/the-team">the awesome people who contributed to the project</a>.</p>
-                <p class="slds-text-heading_small slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong>  I will be putting together a coding series together in the future - follow me on <a href="https://www.linkedin.com/in/maujood/">LinkedIn</a> to hear about it!</p>
             </div>
         </div>
     </article>;
