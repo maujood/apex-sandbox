@@ -21,6 +21,9 @@ const HomePage = (props) => {
     if (user.loggedIn) {
         homeProblemList = () => {
             return <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1">
+                <p class="slds-text-heading_medium slds-p-top_medium"><strong>Haven't started your coding journey yet?</strong> I'm putting together <a href="https://www.codesteps.dev">CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
+                </div>
                 <div class="slds-col slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
                     <div class="slds-p-around_medium">
                         <div class="slds-text-heading_medium">Get Started with Beginner Problems</div>
