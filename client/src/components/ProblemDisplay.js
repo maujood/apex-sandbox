@@ -25,6 +25,7 @@ const ProblemDisplay = (props) => {
             return <ProblemHint text={text} key={i} index={i+1} />
         })}
         <p>Discuss this problem on the <a href="https://trailhead.salesforce.com/trailblazer-community/groups/0F94S000000kJb2SAE" target="_blank" rel="noreferrer">ApexSandbox.io Trailblazer Community Group</a></p>
+        <p>Looking to learn programming? <a href="https://www.codesteps.dev" target="_blank">I just launched CodeSteps.dev, free interactive programming lessons for complete beginners</a>. Check it out and let me know if you like them!</p>
     </div>);
 }
 
