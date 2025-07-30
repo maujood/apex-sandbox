@@ -12,7 +12,7 @@ const CodeStepsLink = (props) => {
         </a>
         <div class="slds-media__body slds-border_left slds-p-left_large">
             <p class="slds-text-heading_medium">Zero Coding Experience?</p>
-            <p class="slds-text-heading_small"><a href="https://www.codesteps.dev" target="_blank">Check out CodeSteps.dev, free interactive programming lessons for complete beginners</a> that I've been putting together. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
+            <p class="slds-text-heading_small"><a href="https://www.codesteps.dev" target="_blank">I just launched CodeSteps.dev, free interactive programming lessons for complete beginners</a>. CodeSteps.dev focuses on JavaScript, the language used by Lightning Web Components.</p>
         </div>
     </div>
 }
