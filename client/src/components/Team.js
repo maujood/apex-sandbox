@@ -23,6 +23,13 @@ const Team = (props) => {
         </>;
     }
 
+    let harsBio = () => {
+        return <>
+            <p>I love solving problems at scale.</p>
+            <p>I'm a 9 to 5 Software Developer and Cloud Advocate, Tech Blogger, Traveler and a Tech Reviewer from 5 to 9.</p>  
+        </>
+    }
+
     let ankushBio = () => {
         return <>
             <p>I'm a driven and detail-oriented software engineer with professional experience in Salesforce, and I enjoy writing code.</p>
@@ -100,6 +107,13 @@ const Team = (props) => {
                         avatarUrl="/assets/images/avatar_girish.jpg"
                         memberName="Girish Shinde"
                         bio={girishBio()}
+                        />
+                    
+                    <TeamMember 
+                        url="https://www.linkedin.com/in/iamhardik/"
+                        avatarUrl="/assets/images/avatar_hars.jpg"
+                        memberName="Hardik Chudasama"
+                        bio={harsBio()}
                         />
                     
                     <TeamMember 
